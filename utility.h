@@ -9,27 +9,12 @@
 
 namespace util {
 
-	struct rect {
-
-		rect(float x_, float y_, float w_, float h_)
-			: x(x_), y(y_), w(w_), h(h_) {}
-
-		float x, y;
-		float w, h;
-	};
+	SDL_Rect prepare_rect(int x, int y, int w, int h);
 
 	// these functions are defined as inline to avoid breaking the
 	// C++ "one defintion rule"
-
-	inline void rectToSDLRect(const rect& r, SDL_Rect& sdlrect) {
-
-		sdlrect.x = Uint32(r.x);
-		sdlrect.y = Uint32(r.y);
-		sdlrect.w = Uint32(r.w);
-		sdlrect.h = Uint32(r.h);
-	}
-
-	inline bool collisionRectScreenLeft(const rect r, int left) {
+	
+	inline bool collisionRectScreenLeft(const SDL_Rect r, int left) {
 
 		int result = static_cast<int>(r.x);
 
@@ -39,7 +24,7 @@ namespace util {
 			return false;
 	}
 
-	inline bool collisionRectScreenRight(const rect r, int right) {
+	inline bool collisionRectScreenRight(const SDL_Rect r, int right) {
 
 		int result = static_cast<int>(r.x + r.w);
 
@@ -50,7 +35,7 @@ namespace util {
 	}
 
 	// standard axis aligned collision detection algorithm
-	inline bool aabbCollision(const rect& a, const rect& b) {
+	inline bool aabbCollision(const SDL_Rect a, const SDL_Rect b) {
 
 		int leftA, leftB;
 		int rightA, rightB;
@@ -78,7 +63,6 @@ namespace util {
 
 		return true;
 	}
-
 }
 
 #endif

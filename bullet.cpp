@@ -1,18 +1,18 @@
 
 #include "bullet.h"
 
-Bullet::Bullet(const util::rect& r, const std::string& s)
+
+/*
+
+Bullet::Bullet(const SDL_Rect r, const std::string s)
 	: Entity(r, s),
 	bulletActive(false)
 {
 }
-/*
-Bullet::~Bullet() {
-}
-*/
+
 
 // set the bullet to the rect that is passed in (the player's current position)
-void Bullet::fire(const util::rect& r) {
+void Bullet::fire(const SDL_Rect r) {
 
 	if (!isActive()) {
 		bulletActive = true;
@@ -52,3 +52,5 @@ void Bullet::reset() {
 	bulletActive = false;
 	boundingBox.x = boundingBox.y = 0;
 }
+
+*/

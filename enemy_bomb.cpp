@@ -1,8 +1,11 @@
 
 #include "enemy_bomb.h"
 
-EnemyBomb::EnemyBomb(const util::rect& r, const std::string& s)
-	: Entity(util::rect(r), s)
+
+/*
+
+EnemyBomb::EnemyBomb(const SDL_Rect r, const std::string s)
+	: Entity(r, s)
 {
 
 }
@@ -19,3 +22,5 @@ void EnemyBomb::logic(const double delta) {
 void EnemyBomb::render() {
 	Entity::render();
 }
+
+*/

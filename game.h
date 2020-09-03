@@ -15,10 +15,6 @@ class Game {
 
 public:
 
-	static const int SCREEN_W;
-	static const int SCREEN_H;
-	static const int SCREEN_BPP;
-
 	Game();
 
 	void initGame();
@@ -30,9 +26,9 @@ public:
 	void render() const;
 
 private:
-	Player player;
-	EnemyController ec;
-	std::shared_ptr<Bullet> bullet;
+	//Player player;
+	//EnemyController ec;
+	//Bullet* bullet;
 
 };
 

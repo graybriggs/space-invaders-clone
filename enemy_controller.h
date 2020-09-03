@@ -3,6 +3,8 @@
 #ifndef ENEMY_CONTROLLER_HPP
 #define ENEMY_CONTROLLER_HPP
 
+/*
+
 #include "enemy.h"
 #include "bullet.h"
 
@@ -23,7 +25,7 @@ public:
 
 
 	void doEnemyLogic(double delta);
-	int enemyBulletCollision(const std::shared_ptr<Bullet> bul);
+	int enemyBulletCollision(Bullet*);
 	void isEnemyOnBottomLayer();
 	////
 	void testDropBombs();
@@ -41,5 +43,7 @@ private:
 	std::vector<std::shared_ptr<Enemy>> enemies;
 	Direction dir;
 };
+
+*/
 
 #endif

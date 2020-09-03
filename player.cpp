@@ -1,8 +1,8 @@
 
 #include "player.h"
 
-Player::Player(const util::rect& r, const std::string& s)
-	: Entity(r, s),
+Player::Player(Sprite* s, SDL_Rect start_pos)
+	: Entity(s, start_pos),
 	dir(Direction::STOP),
 	fire(false),
 	playerScore(0)
@@ -65,9 +65,6 @@ void Player::logic(double delta) {
 
 }
 
-void Player::render() const {
-	Entity::render();
-}
 
 bool Player::fireBullet() {
 	return fire;

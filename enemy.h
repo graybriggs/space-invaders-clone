@@ -4,38 +4,49 @@
 #define ENEMY_HPP
 
 #include "entity.h"
-#include "enemy_bomb.h"
 
 #include <memory>
 #include <iostream>
+
+/*
+
+class EnemyBomb;
 
 class Enemy : public Entity {
 
 public:
 
-	Enemy(const util::rect& r, const std::string& s, int scoreVal);
+	Enemy(const SDL_Rect r, const std::string& s, int scoreVal) {}
 	//Enemy(int x, int y, int w, int h, std::string s);
-	virtual ~Enemy();
+	virtual ~Enemy() {}
 
-	void setDead();
-	void setAlive();
-	bool isDead() const;
-	void setCanDropBombs(bool b);
-	int getValue();
-	bool canEnemyDropBomb();
+	void setDead() {}
+	void setAlive() {}
+	bool isDead() const {
+		return false;
+	}
+	void setCanDropBombs(bool b) {}
+	int getValue() {
+		return -1;
+	}
+	bool canEnemyDropBomb() {
+		return false;
+	}
 	//
-	void dropBomb();
+	void dropBomb() {}
 	//
-	void logic(const double delta);
-	void render() const;
+	void logic(const double delta) {}
+	void render() const {}
 
 public:
 
 	int value;
 	bool dead;
 	bool canDropBombs;
-	std::shared_ptr<EnemyBomb> bomb;
+	//EnemyBomb* bomb;
 
 };
+
+*/
 
 #endif

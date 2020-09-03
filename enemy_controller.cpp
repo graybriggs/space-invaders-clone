@@ -1,6 +1,8 @@
 
 #include "enemy_controller.h"
 
+/*
+
 EnemyController::EnemyController()
 	: dir(Direction::LEFT)
 {
@@ -9,7 +11,7 @@ EnemyController::EnemyController()
 	// with the green enemies on the top, blue in the middle and red on the bottom
 	int x = 100, y = 100;
 	for (int i = 0; i < 24; ++i) {
-		util::rect r(x, y, 64, 64);
+		SDL_Rect r = util::prepare_rect(x, y, 64, 64);
 
 		// std::move to avoid making temporary copies
 		if (i >= 0 && i < 8)
@@ -42,13 +44,13 @@ void EnemyController::doEnemyLogic(double delta) {
 	isEnemyOnBottomLayer();
 }
 
-int EnemyController::enemyBulletCollision(const std::shared_ptr<Bullet> bul) {
+int EnemyController::enemyBulletCollision(Bullet* bullet) {
 
 	for (auto& a : enemies) {
 		if (!a->isDead()) {
-			if (util::aabbCollision(bul->getBoundingBox(), a->getBoundingBox())) {
+			if (util::aabbCollision(bullet->getBoundingBox(), a->getBoundingBox())) {
 				a->setDead();
-				bul->setInactive();
+				bullet->setInactive();
 				return a->getValue();
 			}
 		}
@@ -137,3 +139,4 @@ void EnemyController::enemyScreenCollision() {
 
 
 
+*/

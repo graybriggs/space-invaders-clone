@@ -6,16 +6,17 @@
 #include "entity.h"
 #include "utility.h"
 #include <string>
-#include <iostream>
+
+/*
 
 class Bullet : public Entity {
 
 public:
 
-	Bullet(const util::rect& r, const std::string& s);
+	Bullet(const SDL_Rect r, const std::string s);
 	virtual ~Bullet() {}
 
-	void fire(const util::rect& r);
+	void fire(const SDL_Rect r);
 	bool isActive() const;
 	void setInactive();
 
@@ -27,5 +28,8 @@ private:
 
 	bool bulletActive;
 };
+
+
+*/
 
 #endif

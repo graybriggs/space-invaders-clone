@@ -18,12 +18,12 @@ public:
 
 	enum Direction { LEFT, RIGHT, STOP };
 
-	Player(const util::rect& r, const std::string& s);
+	Player() = delete;
+	Player(Sprite* s, SDL_Rect start_pos);
 	virtual ~Player();
 
 	void input(SDL_Event event);
 	void logic(double delta);
-	void render() const;
 
 	bool fireBullet();
 
@@ -31,6 +31,7 @@ public:
 
 private:
 
+	Sprite* s;
 	Direction dir;
 	bool fire;
 	long playerScore;
