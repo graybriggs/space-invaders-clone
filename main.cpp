@@ -4,6 +4,7 @@
 #include "game.h"
 #include "globals.h"
 #include "renderer.h"
+#include "sprite.h"
 
 
 int main(int argc, char* argv[]) {
@@ -27,6 +28,12 @@ int main(int argc, char* argv[]) {
 	bool done = false;
 
 	//Game game(renderer);
+
+	SDL_Texture* tex = nullptr;
+	load_spritesheet(renderer, &tex, "./images/player_ship.bmp");
+
+	Sprite sprite(tex, util::prepare_rect(0,0,32,32));
+	Entity entity(&sprite, util::prepare_rect(300, 250, 32, 32));
 
 	const float fps = 60.0f;
 	const float dt = 1.0f / fps; // fixed timestep of 1/60th of a second
@@ -59,8 +66,11 @@ int main(int argc, char* argv[]) {
 
 		clear_screen(renderer);
 
-		// blank the screen with black before rendering
-		//SDL_FillRect(SDL_GetVideoSurface(), NULL, 0x0);
+		SDL_Rect bb = util::prepare_rect(100, 100, 32, 32);
+
+		SDL_RenderCopy(renderer, sprite.getTexture(), &(sprite.getClipBox()), &bb);
+		render_entity(renderer, entity);
+		SDL_RenderPresent(renderer);
 
 		//game.render();
 		SDL_RenderPresent(renderer);

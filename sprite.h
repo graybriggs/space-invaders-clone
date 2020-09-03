@@ -7,7 +7,8 @@
 
 #include <SDL.h>
 
-int load_spritesheet(SDL_Renderer* renderer, SDL_Texture** spritesheet, std::string img_path);
+int load_spritesheet(SDL_Renderer* renderer, SDL_Texture** sprite, std::string img_path);
+//int load_spritesheet(SDL_Renderer* renderer, Sprite* sprite, std::string img_path);
 
 class Sprite {
 public:
@@ -19,6 +20,7 @@ public:
 
 	SDL_Rect getClipBox();
 	SDL_Texture* getTexture();
+	void setTexture(SDL_Texture* tex);
 
 private:
 
