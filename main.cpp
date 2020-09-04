@@ -33,7 +33,8 @@ int main(int argc, char* argv[]) {
 	load_spritesheet(renderer, &tex, "./images/player_ship.bmp");
 
 	Sprite sprite(tex, util::prepare_rect(0,0,32,32));
-	Entity entity(&sprite, util::prepare_rect(300, 250, 32, 32));
+	Player player(&sprite, util::prepare_rect(global::SCREEN_W / 2, global::SCREEN_H - 100, 32, 32));
+
 
 	const float fps = 60.0f;
 	const float dt = 1.0f / fps; // fixed timestep of 1/60th of a second
@@ -53,6 +54,7 @@ int main(int argc, char* argv[]) {
 				done = true;
 			}
 			//game.input(event);
+			player.input(event);
 		}
 
 		if (accumulator > 0.2f)
@@ -60,16 +62,16 @@ int main(int argc, char* argv[]) {
 
 		while (accumulator > dt) {
 
+			player.logic(dt);
 			//game.logic(dt);
 			accumulator -= dt;
 		}
-
 		clear_screen(renderer);
 
 		SDL_Rect bb = util::prepare_rect(100, 100, 32, 32);
 
-		SDL_RenderCopy(renderer, sprite.getTexture(), &(sprite.getClipBox()), &bb);
-		render_entity(renderer, entity);
+		render_entity(renderer, player);
+
 		SDL_RenderPresent(renderer);
 
 		//game.render();
@@ -77,7 +79,7 @@ int main(int argc, char* argv[]) {
 		
 		//SDL_Flip(SDL_GetVideoSurface());
 	}
-
+	SDL_DestroyTexture(tex);
 	SDL_Quit();
 
 	return 0;

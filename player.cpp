@@ -1,4 +1,5 @@
 
+#include "globals.h"
 #include "player.h"
 
 Player::Player(Sprite* s, SDL_Rect start_pos)
@@ -47,24 +48,22 @@ void Player::input(SDL_Event event) {
 
 void Player::logic(double delta) {
 
-	if (util::collisionRectScreenLeft(boundingBox, 0)) {
-		dir = Direction::STOP;
-		moveBy(delta, 0.0);
+	if (util::collisionRectScreenLeft(bounding_box, 0)) {
+		//dir = Direction::STOP;
+		moveTo(0, global::SCREEN_H - 100);
 	}
-	else if (util::collisionRectScreenRight(boundingBox, 1024)) {
-		dir = Direction::STOP;
-		moveBy(-delta, 0.0);
+	else if (util::collisionRectScreenRight(bounding_box, global::SCREEN_W)) {
+		//dir = Direction::STOP;
+		moveTo(global::SCREEN_W - 32, global::SCREEN_H - 100);
 	}
 
 	if (dir == Direction::LEFT) {
-		moveBy(-5.0 * delta, 0.0);
+		moveBy(-100.0 * delta, 0.0);
 	}
 	else if (dir == Direction::RIGHT) {
-		moveBy(5.0 * delta, 0.0);
+		moveBy(100.0 * delta, 0.0);
 	}
-
 }
-
 
 bool Player::fireBullet() {
 	return fire;

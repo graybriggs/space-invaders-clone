@@ -31,7 +31,6 @@ public:
 
 private:
 
-	Sprite* s;
 	Direction dir;
 	bool fire;
 	long playerScore;

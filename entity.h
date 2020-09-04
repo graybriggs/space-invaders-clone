@@ -3,11 +3,9 @@
 #ifndef ENTITY_HPP
 #define ENTITY_HPP
 
-#include "utility.h"
 #include "sprite.h"
 
 #include <SDL.h>
-#include <string>
 
 
 class Entity {
@@ -21,11 +19,10 @@ public:
 	void moveBy(const double x, const double y);
 	SDL_Rect getBoundingBox() const;
 	Sprite* getSprite();
-
-
+	
 protected:
 
-	SDL_Rect boundingBox;
+	SDL_Rect bounding_box;
 	Sprite* sprite;
 };
 

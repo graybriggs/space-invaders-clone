@@ -28,14 +28,17 @@ int load_spritesheet(SDL_Renderer* renderer, SDL_Texture** spritesheet, std::str
 
 
 Sprite::Sprite() {}
-Sprite::Sprite(SDL_Texture* spritesheet, SDL_Rect clip) {
-	texture = spritesheet;
-	clip_box = clip;
+Sprite::Sprite(SDL_Texture* spritesheet, SDL_Rect clip)
+	:
+	texture(spritesheet),
+	clip_box(clip)
+{
 }
 
 Sprite::~Sprite() {
 	SDL_DestroyTexture(texture);
 }
+
 
 SDL_Rect Sprite::getClipBox() {
 	return clip_box;

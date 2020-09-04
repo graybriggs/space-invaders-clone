@@ -17,7 +17,6 @@ public:
 	Sprite(SDL_Texture* spritesheet, SDL_Rect clip);
 
 	~Sprite();
-
 	SDL_Rect getClipBox();
 	SDL_Texture* getTexture();
 	void setTexture(SDL_Texture* tex);
