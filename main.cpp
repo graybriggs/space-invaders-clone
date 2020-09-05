@@ -34,8 +34,8 @@ int main(int argc, char* argv[]) {
 	SDL_Texture* tex = nullptr;
 	load_spritesheet(renderer, &tex, "./images/player_ship.bmp");
 	auto generic_sprite = std::make_unique<Sprite>(tex, util::Rect(0,0,32,32));
-	Player player(generic_sprite.get(), util::Rect(global::SCREEN_W / 2, global::SCREEN_H - 100, 32, 32));
-	Bullet bullet(generic_sprite.get(), util::Rect(0, 0, 32, 32));
+	Player player(generic_sprite.get(), util::Rect(global::SCREEN_W / 2, global::SCREEN_H - 100, 32, 16));
+	Bullet bullet(generic_sprite.get(), util::Rect(0, 0, 4, 24));
 
 	SDL_Texture* enemy_tex;
 	load_spritesheet(renderer, &enemy_tex, "./images/green_alien.bmp");
@@ -69,15 +69,16 @@ int main(int argc, char* argv[]) {
 
 		while (accumulator > dt) {
 
-			enemy_controller.logic(dt);
 			player.logic(dt);
 			
 			if (player.hasFired() && !bullet.isActive()) {
 				bullet.fire(player.getBoundingBox());
 				player.fireWait();
 			}
-
 			bullet.logic(dt);
+			enemy_controller.logic(dt);
+			enemy_controller.enemyBulletCollision(bullet);
+
 			accumulator -= dt;
 		}
 		clear_screen(renderer);

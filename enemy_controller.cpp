@@ -56,21 +56,18 @@ void EnemyController::logic(double delta) {
 	isEnemyOnBottomLayer();
 }
 
-/*
-int EnemyController::enemyBulletCollision(Bullet* bullet) {
+void EnemyController::enemyBulletCollision(Bullet& bullet) {
 
-	for (auto& a : enemies) {
-		if (!a->isDead()) {
-			if (util::aabbCollision(bullet->getBoundingBox(), a->getBoundingBox())) {
-				a->setDead();
-				bullet->setInactive();
-				return a->getValue();
+	for (auto& enemy : enemies) {
+		if (!enemy.isDead()) {
+			if (util::aabbCollision(enemy.getBoundingBox(), bullet.getBoundingBox())) {
+				enemy.setDead();
+				bullet.setInactive();
 			}
 		}
 	}
-	return 0;
 }
-*/
+
 
 void EnemyController::isEnemyOnBottomLayer() {
 

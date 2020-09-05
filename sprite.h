@@ -12,7 +12,6 @@ int load_spritesheet(SDL_Renderer* renderer, SDL_Texture** sprite, std::string i
 class Sprite {
 public:
 
-	Sprite();
 	Sprite(SDL_Texture* spritesheet, util::Rect clip);
 	Sprite(SDL_Texture* spritesheet, SDL_Rect clip);
 

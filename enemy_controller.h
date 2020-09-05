@@ -23,7 +23,7 @@ public:
 	void resetEnemies();
 
 	void logic(double delta);
-	//int enemyBulletCollision(Bullet*);
+	void enemyBulletCollision(Bullet&);
 	void isEnemyOnBottomLayer();
 	////
 	void testDropBombs();

@@ -38,4 +38,11 @@ public:
 
 };
 
+class BonusEnemy {
+
+
+private:
+	Enemy enemy;
+};
+
 #endif
