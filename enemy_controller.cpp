@@ -1,34 +1,17 @@
 
 #include "enemy_controller.h"
 
-/*
+#include "enemy.h"
+#include "globals.h"
+#include "utility.h"
+#include "renderer.h"
 
-EnemyController::EnemyController()
-	: dir(Direction::LEFT)
+
+EnemyController::EnemyController(Sprite* sprite)
+	: dir(Direction::LEFT),
+	enemy_spritesheet(sprite)
 {
 
-	// construct enemies and lay them out on the screen in an 8x3 array fashion
-	// with the green enemies on the top, blue in the middle and red on the bottom
-	int x = 100, y = 100;
-	for (int i = 0; i < 24; ++i) {
-		SDL_Rect r = util::prepare_rect(x, y, 64, 64);
-
-		// std::move to avoid making temporary copies
-		if (i >= 0 && i < 8)
-			enemies.push_back(std::move(std::make_shared<Enemy>(r, "./images/green_alien.bmp", 30)));
-		else if (i >= 8 && i < 16)
-			enemies.push_back(std::move(std::make_shared<Enemy>(r, "./images/blue_alien.bmp", 20)));
-		else if (i >= 16)
-			enemies.push_back(std::move(std::make_shared<Enemy>(r, "./images/red_alien.bmp", 10)));
-
-		if (x >= 800) {
-			x = 100;
-			y += 100;
-		}
-		else {
-			x += 100;
-		}
-	}
 
 }
 
@@ -36,14 +19,43 @@ EnemyController::~EnemyController() {
 
 }
 
+void EnemyController::setupEnemies() {
+	// construct enemies and lay them out on the screen in an 11x5 array fashion
 
-void EnemyController::doEnemyLogic(double delta) {
+	const int DISPLACEMENT_X = 48;
+	const int DISPLACEMENT_Y = 48;
+	const int ENEMIES_PER_ROW = 11;
+
+	int x = DISPLACEMENT_X;
+	int y = DISPLACEMENT_Y;
+
+	for (int i = 0; i < TOTAL_ENEMIES / ENEMIES_PER_ROW; ++i) {
+		for (int j = 0; j < ENEMIES_PER_ROW; ++j) {
+			SDL_Rect r = util::prepare_rect(x, y, 32, 32);
+			Enemy enemy(enemy_spritesheet, r);
+			enemy.setAlive();
+			enemies.push_back(enemy);
+
+			x += DISPLACEMENT_X;
+		}
+		x = DISPLACEMENT_X;
+		y += DISPLACEMENT_Y;
+	}
+}
+
+void EnemyController::resetEnemies() {
+	
+
+}
+
+void EnemyController::logic(double delta) {
 
 	moveEnemies(delta);
 	enemyScreenCollision();
 	isEnemyOnBottomLayer();
 }
 
+/*
 int EnemyController::enemyBulletCollision(Bullet* bullet) {
 
 	for (auto& a : enemies) {
@@ -57,12 +69,15 @@ int EnemyController::enemyBulletCollision(Bullet* bullet) {
 	}
 	return 0;
 }
+*/
 
 void EnemyController::isEnemyOnBottomLayer() {
 
 	// get the top, middle and bottom enemy of each column
 	// and check if they're dead. if not then enable the bottom
 	// most enemy to drop bombs
+
+	/*
 	auto it = enemies.begin();
 	for (; it != enemies.begin() + 8; it++) {
 		std::shared_ptr<Enemy>& top = *it;
@@ -76,67 +91,59 @@ void EnemyController::isEnemyOnBottomLayer() {
 		else if (!top->isDead())
 			top->setCanDropBombs(true);
 	}
+	*/
 }
 
 //// TEST
 
 void EnemyController::testDropBombs() {
 
-	for (auto& a : enemies) {
-
-		a->dropBomb();
+	for (auto& enemy : enemies) {
+		enemy.dropBomb();
 	}
 }
 
 ////////
 
-void EnemyController::renderEnemies() const {
-
-	for (auto& a : enemies) {
-		a->render();
-	}
-}
 
 bool EnemyController::allEnemiesDead() {
 
-	for (auto& a : enemies) {
-		if (!a->isDead())
+	for (auto& enemy : enemies) {
+		if (!enemy.isDead())
 			return false;
 	}
 	return true;
-}
-
-void EnemyController::resetAllEnemies() {
-
-	for (auto& a : enemies) {
-		a->setAlive();
-	}
 }
 
 // private member functions
 
 void EnemyController::moveEnemies(double delta) {
 	// move the enemies
-	for (auto& a : enemies) {
+	for (auto& enemy : enemies) {
 		if (dir == Direction::LEFT)
-			a->moveBy(-5.0 * delta, 0.0);
+			enemy.moveBy(-75.0 * delta, 0.0);
 		else if (dir == Direction::RIGHT)
-			a->moveBy(5.0 * delta, 0.0);
+			enemy.moveBy(75.0 * delta, 0.0);
 	}
 }
 
 void EnemyController::enemyScreenCollision() {
 
-	for (auto& a : enemies) {
-		if (!a->isDead()) {
-			if (a->getBoundingBox().x < 0.0)
+	for (auto& enemy : enemies) {
+		if (!enemy.isDead()) {
+			if (util::collisionRectScreenLeft(enemy.getBoundingBox(), 2))
 				dir = Direction::RIGHT;
-			else if (a->getBoundingBox().x + a->getBoundingBox().w >= 1024.0)
+			else if (util::collisionRectScreenLeft(enemy.getBoundingBox(), global::SCREEN_W - 32))
 				dir = Direction::LEFT;
 		}
 	}
 }
 
+void EnemyController::renderEnemies(SDL_Renderer* renderer) {
 
-
-*/
+	for (auto& enemy : enemies) {
+		if (!enemy.isDead()) {
+			render_entity(renderer, enemy);
+		}
+	}
+}

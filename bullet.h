@@ -7,21 +7,19 @@
 #include "utility.h"
 #include <string>
 
-/*
 
 class Bullet : public Entity {
 
 public:
 
-	Bullet(const SDL_Rect r, const std::string s);
-	virtual ~Bullet() {}
+	Bullet(Sprite* s, SDL_Rect start_pos);
+	virtual ~Bullet();
 
-	void fire(const SDL_Rect r);
+	void fire(SDL_Rect r);
 	bool isActive() const;
 	void setInactive();
-
+	void setPosition(SDL_Rect);
 	void logic(const double delta);
-	void render() const;
 
 private:
 	void reset();
@@ -30,6 +28,5 @@ private:
 };
 
 
-*/
 
 #endif

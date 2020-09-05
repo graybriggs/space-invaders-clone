@@ -13,5 +13,4 @@ void render_entity(SDL_Renderer* renderer, Entity& entity) {
 		&(entity.getSprite()->getClipBox()),
 		&(entity.getBoundingBox())
 	);
-	SDL_RenderPresent(renderer);
 }

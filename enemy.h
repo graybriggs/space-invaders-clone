@@ -8,7 +8,6 @@
 #include <memory>
 #include <iostream>
 
-/*
 
 class EnemyBomb;
 
@@ -16,37 +15,27 @@ class Enemy : public Entity {
 
 public:
 
-	Enemy(const SDL_Rect r, const std::string& s, int scoreVal) {}
-	//Enemy(int x, int y, int w, int h, std::string s);
-	virtual ~Enemy() {}
+	Enemy(Sprite* s, SDL_Rect pos);
 
-	void setDead() {}
-	void setAlive() {}
-	bool isDead() const {
-		return false;
-	}
-	void setCanDropBombs(bool b) {}
-	int getValue() {
-		return -1;
-	}
-	bool canEnemyDropBomb() {
-		return false;
-	}
+	virtual ~Enemy();
+
+	void setDead();
+	void setAlive();
+	bool isDead() const;
+	void setCanDropBombs(bool b);
+	int getValue();
+	bool canEnemyDropBomb();
 	//
-	void dropBomb() {}
+	void dropBomb();
 	//
-	void logic(const double delta) {}
-	void render() const {}
+	void logic(const double delta);
 
 public:
 
 	int value;
 	bool dead;
 	bool canDropBombs;
-	//EnemyBomb* bomb;
 
 };
-
-*/
 
 #endif

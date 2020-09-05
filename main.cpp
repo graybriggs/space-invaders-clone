@@ -1,6 +1,10 @@
 
+
 #include <SDL.h>
 
+#include <memory>
+
+#include "bullet.h"
 #include "game.h"
 #include "globals.h"
 #include "renderer.h"
@@ -27,14 +31,17 @@ int main(int argc, char* argv[]) {
 
 	bool done = false;
 
-	//Game game(renderer);
-
 	SDL_Texture* tex = nullptr;
 	load_spritesheet(renderer, &tex, "./images/player_ship.bmp");
+	auto generic_sprite = std::make_unique<Sprite>(tex, util::prepare_rect(0, 0, 32, 32));
+	Player player(generic_sprite.get(), util::prepare_rect(global::SCREEN_W / 2, global::SCREEN_H - 100, 32, 32));
+	Bullet bullet(generic_sprite.get(), util::prepare_rect(0,0,32,32));
 
-	Sprite sprite(tex, util::prepare_rect(0,0,32,32));
-	Player player(&sprite, util::prepare_rect(global::SCREEN_W / 2, global::SCREEN_H - 100, 32, 32));
-
+	SDL_Texture* enemy_tex;
+	load_spritesheet(renderer, &enemy_tex, "./images/green_alien.bmp");
+	auto enemy_sprite = std::make_unique<Sprite>(enemy_tex, util::prepare_rect(0,0,32,32));
+	EnemyController enemy_controller(enemy_sprite.get());
+	enemy_controller.setupEnemies();
 
 	const float fps = 60.0f;
 	const float dt = 1.0f / fps; // fixed timestep of 1/60th of a second
@@ -62,22 +69,29 @@ int main(int argc, char* argv[]) {
 
 		while (accumulator > dt) {
 
+			enemy_controller.logic(dt);
 			player.logic(dt);
-			//game.logic(dt);
+			
+			if (player.hasFired() && !bullet.isActive()) {
+				bullet.fire(player.getBoundingBox());
+				player.fireWait();
+			}
+
+			bullet.logic(dt);
 			accumulator -= dt;
 		}
 		clear_screen(renderer);
 
 		SDL_Rect bb = util::prepare_rect(100, 100, 32, 32);
 
+		enemy_controller.renderEnemies(renderer);
 		render_entity(renderer, player);
 
-		SDL_RenderPresent(renderer);
+		if (bullet.isActive())
+			render_entity(renderer, bullet);
 
 		//game.render();
 		SDL_RenderPresent(renderer);
-		
-		//SDL_Flip(SDL_GetVideoSurface());
 	}
 	SDL_DestroyTexture(tex);
 	SDL_Quit();

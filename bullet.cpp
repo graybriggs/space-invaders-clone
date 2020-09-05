@@ -2,23 +2,23 @@
 #include "bullet.h"
 
 
-/*
-
-Bullet::Bullet(const SDL_Rect r, const std::string s)
-	: Entity(r, s),
+Bullet::Bullet(Sprite* s, SDL_Rect start_pos)
+	: Entity(s, start_pos),
 	bulletActive(false)
 {
 }
 
+Bullet::~Bullet() {
+
+}
+
+
 
 // set the bullet to the rect that is passed in (the player's current position)
-void Bullet::fire(const SDL_Rect r) {
+void Bullet::fire(SDL_Rect r) {
 
-	if (!isActive()) {
-		bulletActive = true;
-		boundingBox.x = r.x + r.w / 2 - boundingBox.w / 2;
-		boundingBox.y = r.y;
-	}
+	bulletActive = true;
+	moveTo(r.x + r.w / 2 - bounding_box.w / 2, r.y);
 }
 
 bool Bullet::isActive() const {
@@ -29,20 +29,18 @@ void Bullet::setInactive() {
 	reset();
 }
 
-void Bullet::logic(const double delta) {
-	if (isActive()) {
-		moveBy(0, -12.0 * delta);
-	}
-
-	if (boundingBox.y + boundingBox.h < 0) {
-		reset();
-	}
+void Bullet::setPosition(SDL_Rect pos) {
+	bounding_box.x = pos.x;
+	bounding_box.y = pos.y;
 }
 
-void Bullet::render() const {
-
+void Bullet::logic(const double delta) {
 	if (isActive()) {
-		Entity::render();
+		moveBy(0, -100.0 * delta);
+	}
+
+	if (util::collisionRectScreenTop(bounding_box, 0)) {
+		reset();
 	}
 }
 
@@ -50,7 +48,5 @@ void Bullet::render() const {
 
 void Bullet::reset() {
 	bulletActive = false;
-	boundingBox.x = boundingBox.y = 0;
+	bounding_box.x = bounding_box.y = 0;
 }
-
-*/

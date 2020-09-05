@@ -25,13 +25,16 @@ public:
 	void input(SDL_Event event);
 	void logic(double delta);
 
-	bool fireBullet();
+	bool hasFired() const;
+	void fireWait();
+	void canFireOK();
 
 	void incrementScore(int score);
 
 private:
 
 	Direction dir;
+	bool canFire;
 	bool fire;
 	long playerScore;
 

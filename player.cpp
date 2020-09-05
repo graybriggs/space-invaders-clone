@@ -5,6 +5,7 @@
 Player::Player(Sprite* s, SDL_Rect start_pos)
 	: Entity(s, start_pos),
 	dir(Direction::STOP),
+	canFire(true),
 	fire(false),
 	playerScore(0)
 {
@@ -26,6 +27,7 @@ void Player::input(SDL_Event event) {
 			break;
 		case SDLK_SPACE:
 			fire = true;
+			break;
 		default:
 			break;
 		}
@@ -39,7 +41,8 @@ void Player::input(SDL_Event event) {
 			dir = Direction::STOP;
 			break;
 		case SDLK_SPACE:
-			fire = false;
+			//fire = false;
+			break;
 		default:
 			break;
 		}
@@ -65,8 +68,16 @@ void Player::logic(double delta) {
 	}
 }
 
-bool Player::fireBullet() {
+bool Player::hasFired() const {
 	return fire;
+}
+
+void Player::fireWait() {
+	fire = false;
+}
+
+void Player::canFireOK() {
+	canFire = true;
 }
 
 void Player::incrementScore(int enemyValue) {

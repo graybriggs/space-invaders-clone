@@ -6,8 +6,7 @@
 Entity::Entity(Sprite* s, const SDL_Rect r)
 	: sprite(s),
 	  bounding_box(r)
-{
-	
+{	
 }
 
 void Entity::moveTo(const double x, const double y) {

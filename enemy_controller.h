@@ -3,47 +3,44 @@
 #ifndef ENEMY_CONTROLLER_HPP
 #define ENEMY_CONTROLLER_HPP
 
-/*
+#include <vector>
 
-#include "enemy.h"
 #include "bullet.h"
 
-#include <vector>
-#include <iterator>
-#include <memory>
-
-#include <iostream>
+class Enemy;
 
 class EnemyController {
-
+	
 public:
-
+	static constexpr int TOTAL_ENEMIES = 55;
+	
 	enum Direction { LEFT, RIGHT };
 
-	EnemyController();
+	EnemyController(Sprite*);
 	~EnemyController();
 
+	void setupEnemies();
+	void resetEnemies();
 
-	void doEnemyLogic(double delta);
-	int enemyBulletCollision(Bullet*);
+	void logic(double delta);
+	//int enemyBulletCollision(Bullet*);
 	void isEnemyOnBottomLayer();
 	////
 	void testDropBombs();
 	////
-	void renderEnemies() const;
 	bool allEnemiesDead();
-	void resetAllEnemies();
+
+	void renderEnemies(SDL_Renderer* renderer);
 
 private:
 
 	void moveEnemies(double delta);
 	void enemyScreenCollision();
 
-
-	std::vector<std::shared_ptr<Enemy>> enemies;
+	Sprite* enemy_spritesheet;
+	std::vector<Enemy> enemies;
 	Direction dir;
 };
 
-*/
 
 #endif
