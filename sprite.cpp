@@ -27,7 +27,13 @@ int load_spritesheet(SDL_Renderer* renderer, SDL_Texture** spritesheet, std::str
 
 
 
-Sprite::Sprite() {}
+
+Sprite::Sprite(SDL_Texture* spritesheet, util::Rect clip)
+	: texture(spritesheet),
+	clip_box(clip.getSDLRect())
+{
+}
+
 Sprite::Sprite(SDL_Texture* spritesheet, SDL_Rect clip)
 	:
 	texture(spritesheet),

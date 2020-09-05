@@ -33,13 +33,13 @@ int main(int argc, char* argv[]) {
 
 	SDL_Texture* tex = nullptr;
 	load_spritesheet(renderer, &tex, "./images/player_ship.bmp");
-	auto generic_sprite = std::make_unique<Sprite>(tex, util::prepare_rect(0, 0, 32, 32));
-	Player player(generic_sprite.get(), util::prepare_rect(global::SCREEN_W / 2, global::SCREEN_H - 100, 32, 32));
-	Bullet bullet(generic_sprite.get(), util::prepare_rect(0,0,32,32));
+	auto generic_sprite = std::make_unique<Sprite>(tex, util::Rect(0,0,32,32));
+	Player player(generic_sprite.get(), util::Rect(global::SCREEN_W / 2, global::SCREEN_H - 100, 32, 32));
+	Bullet bullet(generic_sprite.get(), util::Rect(0, 0, 32, 32));
 
 	SDL_Texture* enemy_tex;
 	load_spritesheet(renderer, &enemy_tex, "./images/green_alien.bmp");
-	auto enemy_sprite = std::make_unique<Sprite>(enemy_tex, util::prepare_rect(0,0,32,32));
+	auto enemy_sprite = std::make_unique<Sprite>(enemy_tex, util::Rect(0, 0, 32, 32));
 	EnemyController enemy_controller(enemy_sprite.get());
 	enemy_controller.setupEnemies();
 
@@ -81,8 +81,6 @@ int main(int argc, char* argv[]) {
 			accumulator -= dt;
 		}
 		clear_screen(renderer);
-
-		SDL_Rect bb = util::prepare_rect(100, 100, 32, 32);
 
 		enemy_controller.renderEnemies(renderer);
 		render_entity(renderer, player);

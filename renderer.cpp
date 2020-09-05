@@ -8,9 +8,11 @@ void clear_screen(SDL_Renderer* renderer) {
 
 void render_entity(SDL_Renderer* renderer, Entity& entity) {
 	
+	SDL_Rect bounding_box = entity.getBoundingBox().getSDLRect();
+
 	SDL_RenderCopy(renderer,
 		entity.getSprite()->getTexture(),
 		&(entity.getSprite()->getClipBox()),
-		&(entity.getBoundingBox())
+		&(bounding_box)
 	);
 }

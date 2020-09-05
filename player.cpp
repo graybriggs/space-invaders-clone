@@ -2,7 +2,7 @@
 #include "globals.h"
 #include "player.h"
 
-Player::Player(Sprite* s, SDL_Rect start_pos)
+Player::Player(Sprite* s, util::Rect start_pos)
 	: Entity(s, start_pos),
 	dir(Direction::STOP),
 	canFire(true),
@@ -61,10 +61,10 @@ void Player::logic(double delta) {
 	}
 
 	if (dir == Direction::LEFT) {
-		moveBy(-100.0 * delta, 0.0);
+		moveBy(-10.0 * delta, 0.0);
 	}
 	else if (dir == Direction::RIGHT) {
-		moveBy(100.0 * delta, 0.0);
+		moveBy(10.0 * delta, 0.0);
 	}
 }
 

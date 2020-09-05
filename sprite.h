@@ -2,17 +2,18 @@
 #ifndef SPRITE_LOADER_H
 #define SPRITE_LOADER_H
 
-
-#include <string>
-
 #include <SDL.h>
+#include <string>
+#include "utility.h"
 
 int load_spritesheet(SDL_Renderer* renderer, SDL_Texture** sprite, std::string img_path);
+
 
 class Sprite {
 public:
 
 	Sprite();
+	Sprite(SDL_Texture* spritesheet, util::Rect clip);
 	Sprite(SDL_Texture* spritesheet, SDL_Rect clip);
 
 	// note: A copy constructor is not required because

@@ -12,13 +12,15 @@ class Bullet : public Entity {
 
 public:
 
-	Bullet(Sprite* s, SDL_Rect start_pos);
+	Bullet(Sprite* s, util:: Rect start_pos);
 	virtual ~Bullet();
 
-	void fire(SDL_Rect r);
+	//void fire(SDL_Rect r);
+	void fire(util::Rect r);
 	bool isActive() const;
 	void setInactive();
-	void setPosition(SDL_Rect);
+	void setPosition(util::Rect);
+	//void setPosition(SDL_Rect);
 	void logic(const double delta);
 
 private:

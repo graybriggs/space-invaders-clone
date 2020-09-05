@@ -2,7 +2,7 @@
 #include "bullet.h"
 
 
-Bullet::Bullet(Sprite* s, SDL_Rect start_pos)
+Bullet::Bullet(Sprite* s, util::Rect start_pos)
 	: Entity(s, start_pos),
 	bulletActive(false)
 {
@@ -13,12 +13,11 @@ Bullet::~Bullet() {
 }
 
 
-
 // set the bullet to the rect that is passed in (the player's current position)
-void Bullet::fire(SDL_Rect r) {
+void Bullet::fire(util::Rect r) {
 
 	bulletActive = true;
-	moveTo(r.x + r.w / 2 - bounding_box.w / 2, r.y);
+	moveTo(r.pos_x + r.w / 2 - bounding_box.w / 2, r.pos_y);
 }
 
 bool Bullet::isActive() const {
@@ -29,14 +28,14 @@ void Bullet::setInactive() {
 	reset();
 }
 
-void Bullet::setPosition(SDL_Rect pos) {
-	bounding_box.x = pos.x;
-	bounding_box.y = pos.y;
+void Bullet::setPosition(util::Rect pos) {
+	bounding_box.pos_x = pos.pos_x;
+	bounding_box.pos_y = pos.pos_y;
 }
 
 void Bullet::logic(const double delta) {
 	if (isActive()) {
-		moveBy(0, -100.0 * delta);
+		moveBy(0, -10.0 * delta);
 	}
 
 	if (util::collisionRectScreenTop(bounding_box, 0)) {
@@ -48,5 +47,5 @@ void Bullet::logic(const double delta) {
 
 void Bullet::reset() {
 	bulletActive = false;
-	bounding_box.x = bounding_box.y = 0;
+	bounding_box.pos_x = bounding_box.pos_y = 0;
 }

@@ -1,18 +1,26 @@
 
 #include "enemy.h"
+#include "utility.h"
 
-Enemy::Enemy(Sprite* s, SDL_Rect pos)
+Enemy::Enemy(Sprite* s, util::Rect pos)
 	: Entity(s,pos)
 {
 }
 
 Enemy::~Enemy() {}
 
-void Enemy::setDead() {}
-void Enemy::setAlive() {}
-bool Enemy::isDead() const {
-	return false;
+void Enemy::setDead() {
+	dead = true;
 }
+
+void Enemy::setAlive() {
+	dead = false;
+}
+
+bool Enemy::isDead() const {
+	return dead;
+}
+
 void Enemy::setCanDropBombs(bool b) {
 }
 

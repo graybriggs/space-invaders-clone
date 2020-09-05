@@ -31,7 +31,8 @@ void EnemyController::setupEnemies() {
 
 	for (int i = 0; i < TOTAL_ENEMIES / ENEMIES_PER_ROW; ++i) {
 		for (int j = 0; j < ENEMIES_PER_ROW; ++j) {
-			SDL_Rect r = util::prepare_rect(x, y, 32, 32);
+			//SDL_Rect r = util::prepare_rect(x, y, 32, 32);
+			util::Rect r(x, y, 32, 32);
 			Enemy enemy(enemy_spritesheet, r);
 			enemy.setAlive();
 			enemies.push_back(enemy);
@@ -103,9 +104,6 @@ void EnemyController::testDropBombs() {
 	}
 }
 
-////////
-
-
 bool EnemyController::allEnemiesDead() {
 
 	for (auto& enemy : enemies) {
@@ -118,12 +116,12 @@ bool EnemyController::allEnemiesDead() {
 // private member functions
 
 void EnemyController::moveEnemies(double delta) {
-	// move the enemies
+
 	for (auto& enemy : enemies) {
 		if (dir == Direction::LEFT)
-			enemy.moveBy(-75.0 * delta, 0.0);
+			enemy.moveBy(-5.0 * delta, 0.0);
 		else if (dir == Direction::RIGHT)
-			enemy.moveBy(75.0 * delta, 0.0);
+			enemy.moveBy(5.0 * delta, 0.0);
 	}
 }
 
@@ -131,7 +129,7 @@ void EnemyController::enemyScreenCollision() {
 
 	for (auto& enemy : enemies) {
 		if (!enemy.isDead()) {
-			if (util::collisionRectScreenLeft(enemy.getBoundingBox(), 2))
+			if (util::collisionRectScreenLeft(enemy.getBoundingBox(), 0))
 				dir = Direction::RIGHT;
 			else if (util::collisionRectScreenLeft(enemy.getBoundingBox(), global::SCREEN_W - 32))
 				dir = Direction::LEFT;

@@ -5,18 +5,24 @@
 
 #include <SDL.h>
 
-#include <memory>
-
 namespace util {
+
+	struct Rect {
+		Rect(float x, float y, int w, int h);
+
+		SDL_Rect getSDLRect();
+		float pos_x, pos_y;
+		int w, h;
+	};
 
 	SDL_Rect prepare_rect(int x, int y, int w, int h);
 
 	// these functions are defined as inline to avoid breaking the
 	// C++ "one defintion rule"
 	
-	inline bool collisionRectScreenLeft(const SDL_Rect r, int left) {
+	inline bool collisionRectScreenLeft(const util::Rect r, int left) {
 
-		int result = static_cast<int>(r.x);
+		int result = static_cast<int>(r.pos_x);
 
 		if (result < left)
 			return true;
@@ -24,9 +30,9 @@ namespace util {
 			return false;
 	}
 
-	inline bool collisionRectScreenRight(const SDL_Rect r, int right) {
+	inline bool collisionRectScreenRight(const util::Rect r, int right) {
 
-		int result = static_cast<int>(r.x + r.w);
+		int result = static_cast<int>(r.pos_x + r.w);
 
 		if (result >= right)
 			return true;
@@ -34,9 +40,9 @@ namespace util {
 			return false;
 	}
 
-	inline bool collisionRectScreenTop(const SDL_Rect r, int top) {
+	inline bool collisionRectScreenTop(const util::Rect r, int top) {
 
-		int result = static_cast<int>(r.y);
+		int result = static_cast<int>(r.pos_y);
 
 		if (result < top)
 			return true;
@@ -44,9 +50,9 @@ namespace util {
 			return false;
 	}
 
-	inline bool collisionRectScreenBottom(const SDL_Rect r, int bottom) {
+	inline bool collisionRectScreenBottom(const util::Rect r, int bottom) {
 
-		int result = static_cast<int>(r.y + r.h);
+		int result = static_cast<int>(r.pos_y + r.h);
 
 		if (result < bottom)
 			return true;
@@ -55,22 +61,23 @@ namespace util {
 	}
 
 	// standard axis aligned collision detection algorithm
-	inline bool aabbCollision(const SDL_Rect a, const SDL_Rect b) {
+	//inline bool aabbCollision(const SDL_Rect a, const SDL_Rect b) {
+	inline bool aabbCollision(const util::Rect a, const util::Rect b) {
 
 		int leftA, leftB;
 		int rightA, rightB;
 		int topA, topB;
 		int bottomA, bottomB;
 
-		leftA = static_cast<int>(a.x);
-		rightA = static_cast<int>(a.x + a.w);
-		topA = static_cast<int>(a.y);
-		bottomA = static_cast<int>(a.y + a.h);
+		leftA = static_cast<int>(a.pos_x);
+		rightA = static_cast<int>(a.pos_x + a.w);
+		topA = static_cast<int>(a.pos_y);
+		bottomA = static_cast<int>(a.pos_y + a.h);
 
-		leftB = static_cast<int>(b.x);
-		rightB = static_cast<int>(b.x + b.w);
-		topB = static_cast<int>(b.y);
-		bottomB = static_cast<int>(b.y + b.h);
+		leftB = static_cast<int>(b.pos_x);
+		rightB = static_cast<int>(b.pos_x + b.w);
+		topB = static_cast<int>(b.pos_y);
+		bottomB = static_cast<int>(b.pos_y + b.h);
 
 		if (bottomA <= topB)
 			return false;

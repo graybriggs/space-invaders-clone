@@ -8,14 +8,14 @@
 #include <memory>
 #include <iostream>
 
-
+struct util::Rect;
 class EnemyBomb;
 
 class Enemy : public Entity {
 
 public:
 
-	Enemy(Sprite* s, SDL_Rect pos);
+	Enemy(Sprite* s, util::Rect pos);
 
 	virtual ~Enemy();
 
