@@ -119,9 +119,9 @@ void EnemyController::moveEnemies(double delta) {
 
 	for (auto& enemy : enemies) {
 		if (dir == Direction::LEFT)
-			enemy.moveBy(-5.0 * delta, 0.0);
+			enemy.moveBy(-2.0 * delta, 0.0);
 		else if (dir == Direction::RIGHT)
-			enemy.moveBy(5.0 * delta, 0.0);
+			enemy.moveBy(2.0 * delta, 0.0);
 	}
 }
 
@@ -131,7 +131,7 @@ void EnemyController::enemyScreenCollision() {
 		if (!enemy.isDead()) {
 			if (util::collisionRectScreenLeft(enemy.getBoundingBox(), 0))
 				dir = Direction::RIGHT;
-			else if (util::collisionRectScreenLeft(enemy.getBoundingBox(), global::SCREEN_W - 32))
+			else if (util::collisionRectScreenRight(enemy.getBoundingBox(), global::SCREEN_W))
 				dir = Direction::LEFT;
 		}
 	}
