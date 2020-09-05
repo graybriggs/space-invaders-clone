@@ -34,6 +34,26 @@ namespace util {
 			return false;
 	}
 
+	inline bool collisionRectScreenTop(const SDL_Rect r, int top) {
+
+		int result = static_cast<int>(r.y);
+
+		if (result < top)
+			return true;
+		else
+			return false;
+	}
+
+	inline bool collisionRectScreenBottom(const SDL_Rect r, int bottom) {
+
+		int result = static_cast<int>(r.y + r.h);
+
+		if (result < bottom)
+			return true;
+		else
+			return false;
+	}
+
 	// standard axis aligned collision detection algorithm
 	inline bool aabbCollision(const SDL_Rect a, const SDL_Rect b) {
 
