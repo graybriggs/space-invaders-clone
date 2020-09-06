@@ -12,8 +12,8 @@ int load_spritesheet(SDL_Renderer* renderer, SDL_Texture** spritesheet, std::str
 	}
 
 	// specify a color key for transparent pixels - here it's 0xFF00FF - bright pink
-	//Uint32 colorkey = SDL_MapRGB(surface_img->format, 0xFF, 0x00, 0xFF);
-	//SDL_SetColorKey(surface_img, SDL_TRUE, colorkey);
+	Uint32 colorkey = SDL_MapRGB(surface_img->format, 0xFF, 0x00, 0xFF);
+	SDL_SetColorKey(surface_img, SDL_TRUE, colorkey);
 
 	*spritesheet = SDL_CreateTextureFromSurface(renderer, surface_img);
 	SDL_FreeSurface(surface_img);
@@ -21,6 +21,7 @@ int load_spritesheet(SDL_Renderer* renderer, SDL_Texture** spritesheet, std::str
 	if (spritesheet == nullptr) {
 		throw - 1;
 	}
+
 
 	return 0;
 }
