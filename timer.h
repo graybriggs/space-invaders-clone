@@ -25,6 +25,18 @@ private:
 	float frameStart;
 };
 
+class CountDownTimer {
+public:
+
+	void update();
+	bool countdown(Uint32 amount);
+	bool oneSecond();
+
+private:
+	Uint32 current_time;
+	Uint32 last_time;
+};
+
 #endif
 
 

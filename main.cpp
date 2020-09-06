@@ -9,6 +9,7 @@
 #include "globals.h"
 #include "renderer.h"
 #include "sprite.h"
+#include "timer.h"
 
 
 int main(int argc, char* argv[]) {
@@ -47,6 +48,8 @@ int main(int argc, char* argv[]) {
 	const float dt = 1.0f / fps; // fixed timestep of 1/60th of a second
 	float accumulator = 0.0f;
 	float frameStart = static_cast<float>(SDL_GetTicks());
+
+	CountDownTimer countdown_timer;
 
 	while (!done) {
 
@@ -91,6 +94,8 @@ int main(int argc, char* argv[]) {
 
 		//game.render();
 		SDL_RenderPresent(renderer);
+
+		//countdown_timer.oneSecond();
 	}
 	SDL_DestroyTexture(tex);
 	SDL_Quit();

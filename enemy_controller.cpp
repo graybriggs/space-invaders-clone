@@ -1,4 +1,6 @@
 
+#include <iterator>
+
 #include "enemy_controller.h"
 
 #include "enemy.h"
@@ -24,17 +26,16 @@ void EnemyController::setupEnemies() {
 
 	const int DISPLACEMENT_X = 48;
 	const int DISPLACEMENT_Y = 48;
-	const int ENEMIES_PER_ROW = 11;
 
 	int x = DISPLACEMENT_X;
 	int y = DISPLACEMENT_Y;
 
 	for (int i = 0; i < TOTAL_ENEMIES / ENEMIES_PER_ROW; ++i) {
 		for (int j = 0; j < ENEMIES_PER_ROW; ++j) {
-			//SDL_Rect r = util::prepare_rect(x, y, 32, 32);
 			util::Rect r(x, y, 32, 32);
 			Enemy enemy(enemy_spritesheet, r);
 			enemy.setAlive();
+			enemy.setCanDropBombs(false);
 			enemies.push_back(enemy);
 
 			x += DISPLACEMENT_X;
@@ -54,6 +55,8 @@ void EnemyController::logic(double delta) {
 	moveEnemies(delta);
 	enemyScreenCollision();
 	isEnemyOnBottomLayer();
+	for (auto& e : enemies)
+		e.logic(delta);
 }
 
 void EnemyController::enemyBulletCollision(Bullet& bullet) {
@@ -69,27 +72,33 @@ void EnemyController::enemyBulletCollision(Bullet& bullet) {
 }
 
 
+std::size_t EnemyController::to1D(int x, int y) {
+
+	return y * ENEMIES_PER_ROW + x;
+}
+
+
 void EnemyController::isEnemyOnBottomLayer() {
 
-	// get the top, middle and bottom enemy of each column
-	// and check if they're dead. if not then enable the bottom
-	// most enemy to drop bombs
+	for (int x = 0; x < ENEMIES_PER_ROW; ++x) {
+		for (int y = 4; y >= 0; --y) {
 
-	/*
-	auto it = enemies.begin();
-	for (; it != enemies.begin() + 8; it++) {
-		std::shared_ptr<Enemy>& top = *it;
-		std::shared_ptr<Enemy>& mid = *(it + 8);
-		std::shared_ptr<Enemy>& bottom = *(it + 16);
+			std::size_t pos = to1D(x, y);
+			Enemy& e = enemies[pos];
 
-		if (!bottom->isDead())
-			bottom->setCanDropBombs(true);
-		else if (!mid->isDead())
-			mid->setCanDropBombs(true);
-		else if (!top->isDead())
-			top->setCanDropBombs(true);
+			if (!e.isDead()) {
+				e.setCanDropBombs(true);
+				break;
+			}
+		}
 	}
-	*/
+	
+	for (auto& a : enemies) {
+		if (a.canDropBombs()) {
+
+		}
+	}
+
 }
 
 //// TEST

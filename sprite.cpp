@@ -46,11 +46,15 @@ Sprite::~Sprite() {
 }
 
 
-SDL_Rect Sprite::getClipBox() {
+SDL_Rect Sprite::getClipBox() const {
 	return clip_box;
 }
 
-SDL_Texture* Sprite::getTexture() {
+void Sprite::setClipBox(SDL_Rect box) {
+	clip_box = box;
+}
+
+SDL_Texture* Sprite::getTexture() const {
 	return texture;
 }
 

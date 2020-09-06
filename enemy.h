@@ -23,8 +23,7 @@ public:
 	void setAlive();
 	bool isDead() const;
 	void setCanDropBombs(bool b);
-	int getValue();
-	bool canEnemyDropBomb();
+	bool canDropBombs();
 	//
 	void dropBomb();
 	//
@@ -34,7 +33,7 @@ public:
 
 	int value;
 	bool dead;
-	bool canDropBombs;
+	bool canDropBomb;
 
 };
 

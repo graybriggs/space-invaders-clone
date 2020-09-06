@@ -19,8 +19,9 @@ public:
 	// the texture is created outside of the Sprite object.
 
 	~Sprite();
-	SDL_Rect getClipBox();
-	SDL_Texture* getTexture();
+	SDL_Rect getClipBox() const;
+	void setClipBox(SDL_Rect);
+	SDL_Texture* getTexture() const ;
 	void setTexture(SDL_Texture* tex);
 
 private:
