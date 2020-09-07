@@ -6,6 +6,7 @@ Bullet::Bullet(Sprite* s, util::Rect start_pos)
 	: Entity(s, start_pos),
 	bulletActive(false)
 {
+	setImageClipBox(util::prepare_rect(0, 0, 4, 32));
 }
 
 Bullet::~Bullet() {
@@ -35,7 +36,7 @@ void Bullet::setPosition(util::Rect pos) {
 
 void Bullet::logic(const double delta) {
 	if (isActive()) {
-		moveBy(0, -60.0 * delta);
+		moveBy(0, -15.0 * delta);
 	}
 
 	if (util::collisionRectScreenTop(bounding_box, 0)) {

@@ -9,6 +9,7 @@ Player::Player(Sprite* s, util::Rect start_pos)
 	fire(false),
 	playerScore(0)
 {
+	setImageClipBox(util::prepare_rect(0,0,32,16));
 }
 
 Player::~Player() {

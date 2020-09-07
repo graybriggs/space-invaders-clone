@@ -34,13 +34,13 @@ int main(int argc, char* argv[]) {
 
 	SDL_Texture* tex = nullptr;
 	load_spritesheet(renderer, &tex, "./images/player_ship.bmp");
-	auto generic_sprite = std::make_unique<Sprite>(tex, util::Rect(0,0,32,32));
+	auto generic_sprite = std::make_unique<Sprite>(tex);
 	Player player(generic_sprite.get(), util::Rect(global::SCREEN_W / 2, global::SCREEN_H - 100, 32, 16));
 	Bullet bullet(generic_sprite.get(), util::Rect(0, 0, 4, 24));
 
 	SDL_Texture* enemy_tex;
-	load_spritesheet(renderer, &enemy_tex, "./images/green_alien.bmp");
-	auto enemy_sprite = std::make_unique<Sprite>(enemy_tex, util::Rect(0, 0, 32, 32));
+	load_spritesheet(renderer, &enemy_tex, "./images/aliens.bmp");
+	auto enemy_sprite = std::make_unique<Sprite>(enemy_tex);
 	EnemyController enemy_controller(enemy_sprite.get());
 	enemy_controller.setupEnemies();
 

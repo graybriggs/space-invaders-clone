@@ -12,7 +12,8 @@ void render_entity(SDL_Renderer* renderer, Entity& entity) {
 
 	SDL_RenderCopy(renderer,
 		entity.getSprite()->getTexture(),
-		&(entity.getSprite()->getClipBox()),
+		//&(entity.getSprite()->getClipBox()),
+		&(entity.getImageClipBox()),
 		&(bounding_box)
 	);
 }

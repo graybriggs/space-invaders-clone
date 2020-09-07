@@ -27,18 +27,8 @@ int load_spritesheet(SDL_Renderer* renderer, SDL_Texture** spritesheet, std::str
 }
 
 
-
-
-Sprite::Sprite(SDL_Texture* spritesheet, util::Rect clip)
-	: texture(spritesheet),
-	clip_box(clip.getSDLRect())
-{
-}
-
-Sprite::Sprite(SDL_Texture* spritesheet, SDL_Rect clip)
-	:
-	texture(spritesheet),
-	clip_box(clip)
+Sprite::Sprite(SDL_Texture* spritesheet)
+	: texture(spritesheet)
 {
 }
 
@@ -46,14 +36,6 @@ Sprite::~Sprite() {
 	SDL_DestroyTexture(texture);
 }
 
-
-SDL_Rect Sprite::getClipBox() const {
-	return clip_box;
-}
-
-void Sprite::setClipBox(SDL_Rect box) {
-	clip_box = box;
-}
 
 SDL_Texture* Sprite::getTexture() const {
 	return texture;

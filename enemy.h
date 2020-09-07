@@ -27,7 +27,7 @@ public:
 	//
 	void dropBomb();
 	//
-	void logic(const double delta);
+	void logic(const double delta, bool);
 
 public:
 

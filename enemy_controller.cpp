@@ -14,7 +14,6 @@ EnemyController::EnemyController(Sprite* sprite)
 	enemy_spritesheet(sprite)
 {
 
-
 }
 
 EnemyController::~EnemyController() {
@@ -55,8 +54,9 @@ void EnemyController::logic(double delta) {
 	moveEnemies(delta);
 	enemyScreenCollision();
 	isEnemyOnBottomLayer();
+
 	for (auto& e : enemies)
-		e.logic(delta);
+		e.logic(delta, e.canDropBombs());
 }
 
 void EnemyController::enemyBulletCollision(Bullet& bullet) {
@@ -93,12 +93,6 @@ void EnemyController::isEnemyOnBottomLayer() {
 		}
 	}
 	
-	for (auto& a : enemies) {
-		if (a.canDropBombs()) {
-
-		}
-	}
-
 }
 
 //// TEST

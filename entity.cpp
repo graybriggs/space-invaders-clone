@@ -21,16 +21,19 @@ void Entity::moveBy(const double x, const double y) {
 	//bounding_box.y += static_cast<Sint16>(y);
 }
 
-/*
-SDL_Rect Entity::getBoundingBox() const {
-	return bounding_box;
-}
-*/
-
 util::Rect Entity::getBoundingBox() const {
 	return bounding_box;
 }
 
 Sprite* Entity::getSprite() {
 	return sprite;
+}
+
+SDL_Rect Entity::getImageClipBox() const {
+	return image_clip_box;
+}
+
+
+void Entity::setImageClipBox(SDL_Rect box) {
+	image_clip_box = box;
 }

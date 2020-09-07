@@ -19,11 +19,13 @@ public:
 	//SDL_Rect getBoundingBox() const;
 	util::Rect getBoundingBox() const;
 	Sprite* getSprite();
-	
+	SDL_Rect getImageClipBox() const;
+	void setImageClipBox(SDL_Rect);
+
 protected:
 
+	SDL_Rect image_clip_box;
 	util::Rect bounding_box;
-	//SDL_Rect bounding_box;
 	Sprite* sprite;
 };
 

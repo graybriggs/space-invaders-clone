@@ -31,24 +31,18 @@ bool Enemy::canDropBombs() {
 	return canDropBomb;
 }
 //
-void Enemy::dropBomb() {}
-//
-void Enemy::logic(const double delta) {
+void Enemy::dropBomb() {
 
-	if (canDropBomb) {
-		SDL_Rect r;
-		r.x = 32;
-		r.y = 0;
-		r.w = 32;
-		r.h = 32;
-		sprite->setClipBox(r);
+}
+
+void Enemy::logic(const double delta, bool b) {
+	SDL_Rect r;
+	if (!b) {
+		r = util::prepare_rect(0, 0, 32, 32);
+		setImageClipBox(r);
 	}
 	else {
-		SDL_Rect r;
-		r.x = 0;
-		r.y = 0;
-		r.w = 32;
-		r.h = 32;
-		sprite->setClipBox(r);
+		r = util::prepare_rect(64, 0, 32, 32);
+		setImageClipBox(r);
 	}
 }
