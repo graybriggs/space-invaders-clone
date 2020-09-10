@@ -20,7 +20,7 @@ public:
 	virtual void setPosition(const SDL_Rect);
 	virtual void setPosition(const util::Rect);
 	virtual util::Rect getBoundingBox() const;
-	virtual Sprite* getSprite();
+	virtual Sprite* getSprite() const;
 	virtual SDL_Rect getImageClipBox() const;
 	virtual void setImageClipBox(SDL_Rect);
 	virtual void setImageClipBox(std::initializer_list<int>);

@@ -6,14 +6,18 @@ void clear_screen(SDL_Renderer* renderer) {
 	SDL_RenderClear(renderer);
 }
 
-void render_entity(SDL_Renderer* renderer, Entity& entity) {
+void render_entity(SDL_Renderer* renderer, const Entity& entity) {
 	
 	SDL_Rect bounding_box = entity.getBoundingBox().getSDLRect();
 
 	SDL_RenderCopy(renderer,
 		entity.getSprite()->getTexture(),
-		//&(entity.getSprite()->getClipBox()),
 		&(entity.getImageClipBox()),
 		&(bounding_box)
 	);
+}
+
+void render_rect(SDL_Renderer* renderer, const SDL_Rect rect) {
+
+	SDL_RenderDrawRect(renderer, &rect);
 }

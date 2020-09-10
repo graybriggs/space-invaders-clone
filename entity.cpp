@@ -36,7 +36,7 @@ util::Rect Entity::getBoundingBox() const {
 	return bounding_box;
 }
 
-Sprite* Entity::getSprite() {
+Sprite* Entity::getSprite() const {
 	return sprite;
 }
 
