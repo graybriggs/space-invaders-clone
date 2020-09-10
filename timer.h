@@ -31,8 +31,12 @@ public:
 	void update();
 	bool countdown(Uint32 amount);
 	bool oneSecond();
+	void setActive();
 
 private:
+
+	bool active;
+
 	Uint32 current_time;
 	Uint32 last_time;
 };

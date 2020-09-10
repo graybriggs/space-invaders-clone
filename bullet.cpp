@@ -36,7 +36,7 @@ void Bullet::setPosition(util::Rect pos) {
 
 void Bullet::logic(const double delta) {
 	if (isActive()) {
-		moveBy(0, -15.0 * delta);
+		moveBy(0, -7.5 * delta);
 	}
 
 	if (util::collisionRectScreenTop(bounding_box, 0)) {

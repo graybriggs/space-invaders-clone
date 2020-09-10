@@ -62,10 +62,10 @@ void Player::logic(double delta) {
 	}
 
 	if (dir == Direction::LEFT) {
-		moveBy(-10.0 * delta, 0.0);
+		moveBy(-5.0 * delta, 0.0);
 	}
 	else if (dir == Direction::RIGHT) {
-		moveBy(10.0 * delta, 0.0);
+		moveBy(5.0 * delta, 0.0);
 	}
 }
 

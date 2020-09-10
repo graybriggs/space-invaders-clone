@@ -3,11 +3,13 @@
 #ifndef ENEMY_CONTROLLER_HPP
 #define ENEMY_CONTROLLER_HPP
 
+#include <memory>
 #include <vector>
 
 #include "bullet.h"
 
 class Enemy;
+class Bomb;
 
 class EnemyController {
 	
@@ -22,12 +24,13 @@ public:
 
 	void setupEnemies();
 	void resetEnemies();
+	void setupBombs(Sprite*);
 
-	void logic(double delta);
+	void logic(const double delta);
 	void enemyBulletCollision(Bullet&);
 	void isEnemyOnBottomLayer();
 	////
-	void testDropBombs();
+	void bombDropController(const float);
 	////
 	bool allEnemiesDead();
 
@@ -42,6 +45,15 @@ private:
 	Sprite* enemy_spritesheet;
 	std::vector<Enemy> enemies;
 	Direction dir;
+
+	std::vector<Enemy*> bottom_enemies;
+	bool readyToDropBomb;
+
+	float last_time;
+
+	std::unique_ptr<Bomb> bomb;
+	//std::vector<std::unique_ptr<Bomb>> bombs;
+
 };
 
 

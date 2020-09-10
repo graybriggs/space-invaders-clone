@@ -33,9 +33,10 @@ int main(int argc, char* argv[]) {
 	bool done = false;
 
 	auto player_sprite = load_sprite(renderer, "./images/player_ship.bmp");
-
 	Player player(player_sprite.get(), util::Rect(global::SCREEN_W / 2, global::SCREEN_H - 100, 32, 16));
-	Bullet bullet(player_sprite.get(), util::Rect(0, 0, 4, 24));
+
+	auto bullet_sprite = load_sprite(renderer, "./images/bullet.bmp");
+	Bullet bullet(bullet_sprite.get(), util::Rect(0, 0, 2, 24));
 
 	auto enemy_sprite = load_sprite(renderer, "./images/aliens.bmp");
 	EnemyController enemy_controller(enemy_sprite.get());
@@ -48,8 +49,6 @@ int main(int argc, char* argv[]) {
 	const float dt = 1.0f / fps; // fixed timestep of 1/60th of a second
 	float accumulator = 0.0f;
 	float frameStart = static_cast<float>(SDL_GetTicks());
-
-	CountDownTimer countdown_timer;
 
 
 	while (!done) {
@@ -97,8 +96,6 @@ int main(int argc, char* argv[]) {
 		//game.render();
 		SDL_RenderPresent(renderer);
 
-		countdown_timer.countdown(10);
-		
 	}
 
 	SDL_Quit();

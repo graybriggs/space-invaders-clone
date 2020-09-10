@@ -1,8 +1,10 @@
 
 #include <iterator>
+#include <memory>
 
 #include "enemy_controller.h"
 
+#include "bomb.h"
 #include "enemy.h"
 #include "globals.h"
 #include "utility.h"
@@ -13,7 +15,7 @@ EnemyController::EnemyController(Sprite* sprite)
 	: dir(Direction::LEFT),
 	enemy_spritesheet(sprite)
 {
-
+	last_time = static_cast<float>(SDL_GetTicks());
 }
 
 EnemyController::~EnemyController() {
@@ -44,19 +46,49 @@ void EnemyController::setupEnemies() {
 	}
 }
 
-void EnemyController::resetEnemies() {
-	
 
+void EnemyController::resetEnemies() {
+	enemies.clear();
+	setupEnemies();
 }
 
-void EnemyController::logic(double delta) {
+void EnemyController::setupBombs(Sprite* s) {
+
+	bomb = std::make_unique<Bomb>(s, util::Rect(0, 0, 8, 24));
+	bomb->setImageClipBox({ 0, 0, 8, 24 });
+	/*
+	for (int i = 0; i < 11; ++i) {
+		auto bomb = std::make_unique<Bomb>(s, util::Rect(0, 0, 8, 24));
+		bomb->setImageClipBox({ 0, 0, 8, 24 });
+		bombs.push_back(bomb);
+	}
+	*/
+}
+
+void EnemyController::logic(const double delta) {
 
 	moveEnemies(delta);
 	enemyScreenCollision();
 	isEnemyOnBottomLayer();
 
-	for (auto& e : enemies)
-		e.logic(delta, e.canDropBombs());
+	for (auto& e : enemies) {
+		e.logic(delta);
+	}
+
+	//bomb->logic(delta);
+
+	bomb->isActive();
+	bomb->moveBy(0, 3.0 * delta);
+	/*
+	for (auto& b : bombs) {
+		if (b->isActive()) {
+			b->moveBy(0, 3.0 * delta);
+		}
+	}
+	*/
+
+	if (allEnemiesDead())
+		resetEnemies();
 }
 
 void EnemyController::enemyBulletCollision(Bullet& bullet) {
@@ -88,20 +120,33 @@ void EnemyController::isEnemyOnBottomLayer() {
 
 			if (!e.isDead()) {
 				e.setCanDropBombs(true);
+				bottom_enemies.push_back(&e);
 				break;
 			}
 		}
 	}
-	
 }
 
 //// TEST
 
-void EnemyController::testDropBombs() {
+void EnemyController::bombDropController(const float current_time) {
 
-	for (auto& enemy : enemies) {
-		enemy.dropBomb();
+	if (current_time > last_time + 1000.0f) {
+
+		if (enemies.size()) {
+
+			int rand_enemy = rand() % bottom_enemies.size();
+			Enemy* e = bottom_enemies[rand_enemy];
+			util::Rect r = e->getBoundingBox();
+			util::Rect bomb_pos(r.pos_x + (r.w / 2),
+								r.pos_y + r.h, 4, 24);
+
+			bomb->setPosition(bomb_pos);
+			bomb->setActive();
+		}
+		last_time = current_time;
 	}
+	bottom_enemies.clear();
 }
 
 bool EnemyController::allEnemiesDead() {
@@ -119,9 +164,9 @@ void EnemyController::moveEnemies(double delta) {
 
 	for (auto& enemy : enemies) {
 		if (dir == Direction::LEFT)
-			enemy.moveBy(-2.0 * delta, 0.0);
+			enemy.moveBy(-1.0 * delta, 0.0);
 		else if (dir == Direction::RIGHT)
-			enemy.moveBy(2.0 * delta, 0.0);
+			enemy.moveBy(1.0 * delta, 0.0);
 	}
 }
 
@@ -144,4 +189,6 @@ void EnemyController::renderEnemies(SDL_Renderer* renderer) {
 			render_entity(renderer, enemy);
 		}
 	}
+
+	render_entity(renderer, *(bomb.get()));
 }

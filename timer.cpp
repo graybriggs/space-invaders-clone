@@ -30,14 +30,19 @@ void CountDownTimer::update() {
 	current_time = SDL_GetTicks();
 }
 
+void CountDownTimer::setActive() {
+	active = true;
+}
+
 bool CountDownTimer::countdown(Uint32 amount) {
 
-	current_time = SDL_GetTicks();
-	if (current_time > last_time + amount) {
-		// a second has elapsed
-		//std::cout << "Report: " << variable << "\n";
-		last_time = current_time;
-		return true;
+	if (active) {
+		current_time = SDL_GetTicks();
+		if (current_time > last_time + amount) {
+			last_time = current_time;
+			active = false;
+			return true;
+		}
 	}
 	return false;
 }

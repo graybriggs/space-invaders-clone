@@ -14,13 +14,16 @@ public:
 
 	Entity(Sprite* s, const util::Rect r);
 
-	void moveTo(const double x, const double y);
-	void moveBy(const double x, const double y);
-	//SDL_Rect getBoundingBox() const;
-	util::Rect getBoundingBox() const;
-	Sprite* getSprite();
-	SDL_Rect getImageClipBox() const;
-	void setImageClipBox(SDL_Rect);
+	virtual void moveTo(const double x, const double y);
+	virtual void moveBy(const double x, const double y);
+	virtual void setPosition(const double x, const double y);
+	virtual void setPosition(const SDL_Rect);
+	virtual void setPosition(const util::Rect);
+	virtual util::Rect getBoundingBox() const;
+	virtual Sprite* getSprite();
+	virtual SDL_Rect getImageClipBox() const;
+	virtual void setImageClipBox(SDL_Rect);
+	virtual void setImageClipBox(std::initializer_list<int>);
 
 protected:
 

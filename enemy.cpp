@@ -1,4 +1,4 @@
-
+#include "globals.h"
 #include "enemy.h"
 #include "utility.h"
 
@@ -30,19 +30,18 @@ void Enemy::setCanDropBombs(bool b) {
 bool Enemy::canDropBombs() {
 	return canDropBomb;
 }
-//
-void Enemy::dropBomb() {
 
-}
-
-void Enemy::logic(const double delta, bool b) {
-	SDL_Rect r;
-	if (!b) {
-		r = util::prepare_rect(0, 0, 32, 32);
-		setImageClipBox(r);
+void Enemy::logic(const double delta) {
+	
+	if (!canDropBombs()) {
+		setImageClipBox(util::prepare_rect(0, 0, 32, 32));
 	}
 	else {
-		r = util::prepare_rect(64, 0, 32, 32);
-		setImageClipBox(r);
+		setImageClipBox(util::prepare_rect(64, 0, 32, 32));
 	}
 }
+
+
+///////
+///////
+

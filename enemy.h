@@ -24,10 +24,7 @@ public:
 	bool isDead() const;
 	void setCanDropBombs(bool b);
 	bool canDropBombs();
-	//
-	void dropBomb();
-	//
-	void logic(const double delta, bool);
+	void logic(const double delta);
 
 public:
 
@@ -43,5 +40,6 @@ class BonusEnemy {
 private:
 	Enemy enemy;
 };
+
 
 #endif
