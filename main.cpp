@@ -32,17 +32,17 @@ int main(int argc, char* argv[]) {
 
 	bool done = false;
 
-	SDL_Texture* tex = nullptr;
-	load_spritesheet(renderer, &tex, "./images/player_ship.bmp");
-	auto generic_sprite = std::make_unique<Sprite>(tex);
-	Player player(generic_sprite.get(), util::Rect(global::SCREEN_W / 2, global::SCREEN_H - 100, 32, 16));
-	Bullet bullet(generic_sprite.get(), util::Rect(0, 0, 4, 24));
+	auto player_sprite = load_sprite(renderer, "./images/player_ship.bmp");
 
-	SDL_Texture* enemy_tex;
-	load_spritesheet(renderer, &enemy_tex, "./images/aliens.bmp");
-	auto enemy_sprite = std::make_unique<Sprite>(enemy_tex);
+	Player player(player_sprite.get(), util::Rect(global::SCREEN_W / 2, global::SCREEN_H - 100, 32, 16));
+	Bullet bullet(player_sprite.get(), util::Rect(0, 0, 4, 24));
+
+	auto enemy_sprite = load_sprite(renderer, "./images/aliens.bmp");
 	EnemyController enemy_controller(enemy_sprite.get());
 	enemy_controller.setupEnemies();
+
+	auto bomb_sprite = load_sprite(renderer, "./images/bomb.bmp");
+	enemy_controller.setupBombs(bomb_sprite.get());
 
 	const float fps = 60.0f;
 	const float dt = 1.0f / fps; // fixed timestep of 1/60th of a second
@@ -50,6 +50,7 @@ int main(int argc, char* argv[]) {
 	float frameStart = static_cast<float>(SDL_GetTicks());
 
 	CountDownTimer countdown_timer;
+
 
 	while (!done) {
 
@@ -80,6 +81,7 @@ int main(int argc, char* argv[]) {
 			}
 			bullet.logic(dt);
 			enemy_controller.logic(dt);
+			enemy_controller.bombDropController(currentTime);
 			enemy_controller.enemyBulletCollision(bullet);
 
 			accumulator -= dt;
@@ -95,9 +97,10 @@ int main(int argc, char* argv[]) {
 		//game.render();
 		SDL_RenderPresent(renderer);
 
-		//countdown_timer.oneSecond();
+		countdown_timer.countdown(10);
+		
 	}
-	SDL_DestroyTexture(tex);
+
 	SDL_Quit();
 
 	return 0;

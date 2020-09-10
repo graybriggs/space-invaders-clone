@@ -1,4 +1,5 @@
 #include <stdexcept>
+#include <utility>
 
 #include "sprite.h"
 
@@ -21,9 +22,15 @@ int load_spritesheet(SDL_Renderer* renderer, SDL_Texture** spritesheet, std::str
 	if (spritesheet == nullptr) {
 		throw - 1;
 	}
-
-
 	return 0;
+}
+
+std::unique_ptr<Sprite> load_sprite(SDL_Renderer* renderer, std::string path) {
+
+	SDL_Texture* tex;
+	load_spritesheet(renderer, &tex, path);
+	auto sprite = std::make_unique<Sprite>(tex);
+	return std::move(sprite);
 }
 
 
