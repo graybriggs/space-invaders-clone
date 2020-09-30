@@ -9,6 +9,7 @@ class Entity;
 
 void clear_screen(SDL_Renderer* renderer);
 void render_entity(SDL_Renderer* renderer, const Entity& entity);
+void render_surface(SDL_Renderer* renderer, const Entity& entity, SDL_Surface* surface);
 void render_rect(SDL_Renderer* renderer, SDL_Rect rect);
 
 #endif

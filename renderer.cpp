@@ -17,6 +17,14 @@ void render_entity(SDL_Renderer* renderer, const Entity& entity) {
 	);
 }
 
+void render_surface(SDL_Renderer* renderer, const Entity& entity,SDL_Surface* surface) {
+	SDL_Rect bounding_box = entity.getBoundingBox().getSDLRect();
+
+	SDL_Texture* updated_tex = SDL_CreateTextureFromSurface(renderer, surface);
+
+	SDL_RenderCopy(renderer, updated_tex, &(entity.getImageClipBox()), &bounding_box);
+}
+
 void render_rect(SDL_Renderer* renderer, const SDL_Rect rect) {
 
 	SDL_RenderDrawRect(renderer, &rect);
