@@ -6,7 +6,7 @@
 
 
 Game::Game()
-	//player(Player(util::prepare_rect(global::SCREEN_W / 2, global::SCREEN_H - 100, 96, 32))
+//player(Player(util::prepare_rect(global::SCREEN_W / 2, global::SCREEN_H - 100, 96, 32))
 {
 	//EnemyController = EnemyController;
 	//SDL_Rect bullet_rect = util::prepare_rect(0, 0, 8, 32);

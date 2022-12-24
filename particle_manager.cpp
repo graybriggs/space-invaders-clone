@@ -1,13 +1,23 @@
 
 #include "particle_manager.h"
 
+#include "particle.h"
 
-void ParticleManager::logic() {
+/*
 
-	
+ParticleManager::ParticleManager() :
+	done(false)
+{}
+
+void ParticleManager::logic(double delta) {
+
+	for (auto& a : particles) {
+		a.logic(delta);
+	}	
 }
 
-void ParticleManager::render() const {
-
-
+std::vector<Particle> ParticleManager::getParticles() const {
+	return particles;
 }
+
+*/

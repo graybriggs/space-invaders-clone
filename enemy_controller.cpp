@@ -6,14 +6,17 @@
 
 #include "bomb.h"
 #include "enemy.h"
+#include "game_score.h"
 #include "globals.h"
 #include "utility.h"
 #include "renderer.h"
 
 
-EnemyController::EnemyController(Sprite* sprite)
+EnemyController::EnemyController(Sprite* sprite, GameScore* gs)
 	: dir(Direction::LEFT),
-	enemy_spritesheet(sprite)
+	enemy_spritesheet(sprite),
+	readyToDropBomb(false),
+	game_score(gs)
 {
 	last_time = static_cast<float>(SDL_GetTicks());
 }
@@ -25,6 +28,7 @@ EnemyController::~EnemyController() {
 void EnemyController::setupEnemies() {
 	// construct enemies and lay them out on the screen in an 11x5 array fashion
 
+
 	const int DISPLACEMENT_X = 48;
 	const int DISPLACEMENT_Y = 48;
 
@@ -33,7 +37,7 @@ void EnemyController::setupEnemies() {
 
 	for (int i = 0; i < TOTAL_ENEMIES / ENEMIES_PER_ROW; ++i) {
 		for (int j = 0; j < ENEMIES_PER_ROW; ++j) {
-			util::Rect r(x, y, 32, 32);
+			util::Rect r((float)x, (float)y, 32.0f, 32.0f);
 			Enemy enemy(enemy_spritesheet, r);
 			enemy.setAlive();
 			enemy.setCanDropBombs(false);
@@ -87,16 +91,20 @@ void EnemyController::logic(const double delta) {
 	}
 	*/
 
-	if (allEnemiesDead())
+	if (allEnemiesDead()) {
+		game_score->level_clear();
 		resetEnemies();
+	}
 }
 
 void EnemyController::enemyBulletCollision(Bullet& bullet) {
-
 	for (auto& enemy : enemies) {
 		if (!enemy.isDead()) {
 			if (util::aabbCollision(enemy.getBoundingBox(), bullet.getBoundingBox())) {
 				enemy.setDead();
+
+				game_score->enemy_killed(30);
+
 				bullet.setInactive();
 			}
 		}
@@ -105,7 +113,6 @@ void EnemyController::enemyBulletCollision(Bullet& bullet) {
 
 
 std::size_t EnemyController::to1D(int x, int y) {
-
 	return y * ENEMIES_PER_ROW + x;
 }
 

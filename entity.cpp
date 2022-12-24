@@ -7,6 +7,8 @@ Entity::Entity(Sprite* s, const util::Rect r)
 {	
 }
 
+Entity::~Entity() {}
+
 void Entity::moveTo(const double x, const double y) {
 	bounding_box.pos_x = x;
 	bounding_box.pos_y = y;

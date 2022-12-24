@@ -3,7 +3,8 @@
 #include "utility.h"
 
 Enemy::Enemy(Sprite* s, util::Rect pos)
-	: Entity(s,pos)
+	: Entity(s,pos),
+	dead(false)
 {
 	canDropBomb = false;
 }
@@ -22,10 +23,12 @@ bool Enemy::isDead() const {
 	return dead;
 }
 
+
+
+
 void Enemy::setCanDropBombs(bool b) {
 	canDropBomb = b;
 }
-
 
 bool Enemy::canDropBombs() {
 	return canDropBomb;
@@ -39,6 +42,7 @@ void Enemy::logic(const double delta) {
 	else {
 		setImageClipBox(util::prepare_rect(64, 0, 32, 32));
 	}
+	//particles.logic(delta);
 }
 
 

@@ -9,13 +9,17 @@ class Particle {
 public:
 	Particle();
 
+	void set_position(int x, int y);
+	void set_position(SDL_Rect pos);
 	void reset();
-	void setPosition(SDL_Rect r);
 	void logic(const double delta);
-	void render();
+	bool is_alive() const;
+
+	SDL_Rect get_box() const;
 
 private:
 
+	SDL_Rect box;
 	double xVal, yVal;
 	bool alive;
 	int lifetime;

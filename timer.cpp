@@ -4,6 +4,8 @@
 #include <iostream>
 #include "timer.h"
 
+Timer::~Timer() {}
+
 void Timer::start() {
 	float accumulator = 0.0f;
 	float frameStart = static_cast<float>(SDL_GetTicks());
@@ -59,3 +61,35 @@ bool CountDownTimer::oneSecond() {
 	return false;
 }
 
+/*
+
+// target in ms
+Counter::Counter(Uint32 target) :
+	last_time(0),
+	target_time(target),
+	is_ready(false),
+	running(false)
+{}
+
+void Counter::start() {
+	running = true;
+	last_time = SDL_GetTicks();
+}
+
+void Counter::reset() {
+	start();
+}
+
+void Counter::update() {
+	last_time = SDL_GetTicks();
+	if (SDL_GetTicks() >= last_time + target_time) {
+		is_ready = true;
+	}
+}
+
+bool Counter::ready() {
+	running = false;
+	return is_ready;
+}
+
+*/

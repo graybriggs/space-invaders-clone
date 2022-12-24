@@ -4,12 +4,14 @@
 #define ENEMY_HPP
 
 #include "entity.h"
+#include "particle_manager.h"
 
 #include <memory>
 #include <iostream>
 
 struct util::Rect;
 class EnemyBomb;
+
 
 class Enemy : public Entity {
 
@@ -26,19 +28,12 @@ public:
 	bool canDropBombs();
 	void logic(const double delta);
 
-public:
+private:
 
-	int value;
 	bool dead;
 	bool canDropBomb;
 
-};
-
-class BonusEnemy {
-
-
-private:
-	Enemy enemy;
+	//ParticleManager particles;
 };
 
 

@@ -7,6 +7,9 @@
 
 namespace util {
 
+	// Rect type created to provide a high level of floating point
+	// precision over integer whole number precision for moving objects.
+
 	struct Rect {
 		Rect(float x, float y, int w, int h);
 

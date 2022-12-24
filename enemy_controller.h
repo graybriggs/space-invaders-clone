@@ -10,16 +10,16 @@
 
 class Enemy;
 class Bomb;
+class GameScore;
 
 class EnemyController {
-	
 public:
 	static constexpr int TOTAL_ENEMIES = 55;
 	static constexpr int ENEMIES_PER_ROW = 11;
 	
-	enum Direction { LEFT, RIGHT };
+	enum class Direction { LEFT, RIGHT };
 
-	EnemyController(Sprite*);
+	EnemyController(Sprite*, GameScore* gs);
 	~EnemyController();
 
 	void setupEnemies();
@@ -53,6 +53,8 @@ private:
 
 	std::unique_ptr<Bomb> bomb;
 	//std::vector<std::unique_ptr<Bomb>> bombs;
+
+	GameScore* game_score;
 
 };
 

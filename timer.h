@@ -3,8 +3,6 @@
 #ifndef TIMER_HPP
 #define TIMER_HPP
 
-
-
 class Timer {
 
 public:
@@ -16,14 +14,14 @@ public:
 
 	~Timer();
 
-
-
 private:
 	const float fps = 60.0f;
 	const float dt = 1.0f / fps;
 	float accumulator;
 	float frameStart;
 };
+
+/////////////////////////////////
 
 class CountDownTimer {
 public:
@@ -36,10 +34,35 @@ public:
 private:
 
 	bool active;
-
 	Uint32 current_time;
 	Uint32 last_time;
 };
+
+////////////////////////////////
+
+// class that takes a time
+// call start()
+// once time is elapsed return callback/boolean value
+
+/*
+
+class Counter {
+public:
+	Counter(Uint32 target); // target in ms
+
+	void start();
+	void reset();
+	void update();
+	bool ready();
+
+private:
+	bool running;
+	bool is_ready;
+	Uint32 last_time;
+	Uint32 target_time;
+};
+
+*/
 
 #endif
 
