@@ -11,9 +11,11 @@ namespace util {
 	// precision over integer whole number precision for moving objects.
 
 	struct Rect {
+		Rect();
 		Rect(float x, float y, int w, int h);
 
-		SDL_Rect getSDLRect();
+		SDL_Rect getSDLRect() const;
+		util::Rect fromSDLRect(SDL_Rect r);
 		float pos_x, pos_y;
 		int w, h;
 	};

@@ -42,6 +42,7 @@ void render_particles(SDL_Renderer* renderer, std::vector<Particle>& particles) 
 	for (auto& p : particles) {
 		if (p.is_alive()) {
 			SDL_Rect r = p.get_box();
+			
 			//SDL_RenderDrawRect(rend, &r); // SDL_RenderFillRect  ????
 			////
 			SDL_SetRenderDrawColor(renderer, 0xFF, 0xE8, 0x7C, 0x00);  // color code: "sun yellow"

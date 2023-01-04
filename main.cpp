@@ -8,6 +8,7 @@
 #include "game.h"
 #include "game_score.h"
 #include "globals.h"
+#include "particle_manager.h"
 #include "renderer.h"
 #include "sprite.h"
 #include "star_field.h"
@@ -16,7 +17,7 @@
 #include "bonus_enemy.h"
 
 int main(int argc, char* argv[]) {
-
+	srand(time(nullptr));
 	SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER);
 
 	SDL_Window* window = window = SDL_CreateWindow(
@@ -57,6 +58,9 @@ int main(int argc, char* argv[]) {
 	Starfield starfield;
 	setup_starfield(starfield);
 
+	ParticleManager particle_manager;
+
+
 	const float fps = 60.0f;
 	const float dt = 1.0f / fps; // fixed timestep of 1/60th of a second
 	float accumulator = 0.0f;
@@ -94,6 +98,8 @@ int main(int argc, char* argv[]) {
 			enemy_controller.bombDropController(currentTime);
 			enemy_controller.enemyBulletCollision(bullet);
 			bonus_enemy_controller.logic(dt);
+			
+			particle_manager.logic(dt);
 
 			accumulator -= dt;
 		}
@@ -110,6 +116,7 @@ int main(int argc, char* argv[]) {
 		if (bullet.isActive())
 			render_entity(renderer, bullet);
 
+		render_particles(renderer, particle_manager.getParticles());
 
 		//game.render();
 		SDL_RenderPresent(renderer);

@@ -3,6 +3,8 @@
 #ifndef TIMER_HPP
 #define TIMER_HPP
 
+#include "SDL.h"
+
 class Timer {
 
 public:

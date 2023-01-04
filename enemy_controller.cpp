@@ -101,6 +101,9 @@ void EnemyController::enemyBulletCollision(Bullet& bullet) {
 	for (auto& enemy : enemies) {
 		if (!enemy.isDead()) {
 			if (util::aabbCollision(enemy.getBoundingBox(), bullet.getBoundingBox())) {
+
+				// enemy.particle_manager->activate();
+
 				enemy.setDead();
 
 				game_score->enemy_killed(30);

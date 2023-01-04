@@ -14,12 +14,13 @@ public:
 	void reset();
 	void logic(const double delta);
 	bool is_alive() const;
-
+	void set_alive();
 	SDL_Rect get_box() const;
 
 private:
 
-	SDL_Rect box;
+	//SDL_Rect box;
+	util::Rect particle_box;
 	double xVal, yVal;
 	bool alive;
 	int lifetime;

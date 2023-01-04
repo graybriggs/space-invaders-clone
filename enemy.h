@@ -4,7 +4,7 @@
 #define ENEMY_HPP
 
 #include "entity.h"
-#include "particle_manager.h"
+//#include "particle_manager.h"
 
 #include <memory>
 #include <iostream>
@@ -34,6 +34,8 @@ private:
 	bool canDropBomb;
 
 	//ParticleManager particles;
+
+
 };
 
 
