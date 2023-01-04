@@ -30,7 +30,7 @@ public:
 	void render_bonus_enemy(SDL_Renderer* renderer);
 
 private:
-	Counter bonus_enemy_timer;
+	//Counter bonus_enemy_timer;
 	BonusEnemy* bonus_enemy;
 	bool active;
 

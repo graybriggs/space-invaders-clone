@@ -25,25 +25,28 @@ void BonusEnemy::active(bool toggle) {
 
 BonusEnemyController::BonusEnemyController(BonusEnemy* e, GameScore* gs) :
 		bonus_enemy(e),
-		bonus_enemy_timer(3000),
-		active(false),
+		//bonus_enemy_timer(3000),
+		active(true),
 		game_score(gs)
 	{
 	}
 
 
 void BonusEnemyController::move(double delta) {
-	if (util::collisionRectScreenLeft(bonus_enemy->getBoundingBox(), 0)) {
+	util::Rect r = bonus_enemy->getBoundingBox();
+	r.pos_x += r.w; // so the entire image dissapears off screen
+
+	if (util::collisionRectScreenLeft(r, 0)) {
 		//dir = Direction::STOP;
-		active = false;
-		bonus_enemy->moveTo(global::SCREEN_W, global::SCREEN_H - 600);
-		bonus_enemy_timer.reset();
+		active = true;
+		bonus_enemy->moveTo(global::SCREEN_W, global::SCREEN_H - 650);
+		//bonus_enemy_timer.reset();
 	}
-	bonus_enemy->moveBy(-5.0 * delta, 0.0);
+	bonus_enemy->moveBy(-0.8 * delta, 0.0);
 }
 
 void BonusEnemyController::logic(double delta) {
-	bonus_enemy_timer.update();
+	//bonus_enemy_timer.update();
 	if (active) {
 		move(delta);
 	}

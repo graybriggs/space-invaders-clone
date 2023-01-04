@@ -45,7 +45,7 @@ int main(int argc, char* argv[]) {
 	EnemyController enemy_controller(enemy_sprite.get(), game_score.get());
 	enemy_controller.setupEnemies();
 
-	BonusEnemy bonus_enemy(player_sprite.get(), util::Rect(global::SCREEN_W / 2, global::SCREEN_H - 600, 32, 16));
+	BonusEnemy bonus_enemy(player_sprite.get(), util::Rect(global::SCREEN_W / 2, global::SCREEN_H - 650, 32, 16));
 	bonus_enemy.setImageClipBox(util::prepare_rect(0, 0, 32, 16));
 	BonusEnemyController bonus_enemy_controller(&bonus_enemy, game_score.get());
 
@@ -108,7 +108,7 @@ int main(int argc, char* argv[]) {
 		render_starfield(renderer, starfield);
 
 		bonus_enemy_controller.render_bonus_enemy(renderer);
-		render_entity(renderer, bonus_enemy);
+		//render_entity(renderer, bonus_enemy);
 
 		enemy_controller.renderEnemies(renderer);
 		render_entity(renderer, player);
