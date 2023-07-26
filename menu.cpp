@@ -27,16 +27,25 @@ Menu::Menu(SDL_Renderer* rend, GameStates state):
 	si_rect.h = 300;
 	title.rect = si_rect;
 
-
-	SDL_Surface* surface_score = TTF_RenderText_Solid(sans, "HI-SCORE: ", red);
+	SDL_Surface* surface_score = TTF_RenderText_Solid(sans, "SCORE: ", white);
 	score.texture = SDL_CreateTextureFromSurface(renderer, surface_score);
 	SDL_FreeSurface(surface_score);
 	SDL_Rect score_rect;
-	score_rect.x = 32;
-	score_rect.y = global::SCREEN_H - 48;
+	score_rect.x = 0;
+	score_rect.y = 13;
 	score_rect.w = 96;
-	score_rect.h = 32;
+	score_rect.h = 20;
 	score.rect = score_rect;
+
+	SDL_Surface* surface_hi_score = TTF_RenderText_Solid(sans, "HI-SCORE: ", red);
+	hi_score.texture = SDL_CreateTextureFromSurface(renderer, surface_hi_score);
+	SDL_FreeSurface(surface_hi_score);
+	SDL_Rect hi_score_rect;
+	hi_score_rect.x = 32;
+	hi_score_rect.y = global::SCREEN_H - 48;
+	hi_score_rect.w = 96;
+	hi_score_rect.h = 32;
+	hi_score.rect = hi_score_rect;
 
 
 	SDL_Surface* surface_start = TTF_RenderText_Solid(sans, "Press SPACE or ENTER to start: ", white);
@@ -66,6 +75,7 @@ Menu::Menu(SDL_Renderer* rend, GameStates state):
 Menu::~Menu() {
 	SDL_DestroyTexture(title.texture);
 	SDL_DestroyTexture(score.texture);
+	SDL_DestroyTexture(hi_score.texture);
 	SDL_DestroyTexture(start_msg.texture);
 	SDL_DestroyTexture(version.texture);
 }
@@ -91,6 +101,10 @@ void Menu::main_menu() {
 
 TextEntity Menu::get_score_text_entity() {
 	return score;
+}
+
+TextEntity Menu::get_high_score_text_entity() {
+	return hi_score;
 }
 
 TextEntity Menu::get_title_text_entity() {
