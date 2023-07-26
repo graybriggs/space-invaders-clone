@@ -1,6 +1,7 @@
 #pragma once
 
 #include <array>
+#include <vector>
 
 #include "text_entity.h"
 
@@ -16,7 +17,7 @@ public:
 
 	void init_digits(SDL_Renderer* renderer);
 	void update_score(int score);
-	void parse_score();
+	void parse_score(std::vector<int>& scr, int the_score);
 
 	void render_game_score(SDL_Renderer* renderer);
 	void render_high_score(SDL_Renderer* renderer);
@@ -32,6 +33,7 @@ private:
 	float level_clear_multiplier;
 
 	std::vector<int> score_digits;
+	std::vector<int> high_score_digits;
 	std::array<TextEntity, 10> digits;
 
 };

@@ -7,6 +7,7 @@
 #include <vector>
 
 #include "game_score.h"
+#include "globals.h"
 
 //#include <iostream>
 
@@ -19,6 +20,9 @@ GameScore::GameScore() :
 	level_clear_multiplier(1.0)
 {
 	//init_digits();
+
+	parse_score(high_score_digits, high_score);
+
 }
 
 GameScore::~GameScore() {
@@ -76,26 +80,30 @@ void GameScore::update_score(int score) {
 	}
 }
 
-void GameScore::parse_score() {
-	score_digits.clear();
+void GameScore::parse_score(std::vector<int>& scr, int the_score) {
+	scr.clear();
 
-	int cur_scr = current_score;
+	int cur_scr = the_score;
 
 	while (cur_scr > 0) {
 		int d = cur_scr % 10;
-		score_digits.push_back(d);
+		scr.push_back(d);
 		cur_scr = cur_scr / 10;
 	}
 
-	std::reverse(std::begin(score_digits), std::end(score_digits));
+	if (scr.size() == 0) {
+		scr.push_back(0);
+	}
+
+	std::reverse(std::begin(scr), std::end(scr));
 	
 }
 
 void GameScore::render_game_score(SDL_Renderer* renderer) {
 
-	parse_score();
+	parse_score(score_digits, current_score);
 
-	int x_pos = 0;
+	int x_pos = 96;
 
 	for (int d : score_digits) {
 
@@ -110,6 +118,19 @@ void GameScore::render_game_score(SDL_Renderer* renderer) {
 }
 
 void GameScore::render_high_score(SDL_Renderer* renderer) {
+
+	int x_pos = 128;
+
+	for (int d : high_score_digits) {
+		TextEntity te = digits[d];
+		te.rect.x = x_pos;
+		te.rect.y = global::SCREEN_H - 48;
+		te.rect.h = 32;
+		x_pos += 16;
+
+		SDL_Rect r = te.rect;
+		SDL_RenderCopy(renderer, te.texture, nullptr, &r);
+	}
 
 }
 

@@ -142,6 +142,9 @@ int main(int argc, char* argv[]) {
 			r = menu.get_score_text_entity().rect;
 			SDL_RenderCopy(renderer, menu.get_score_text_entity().texture, nullptr, &r);
 
+			r = menu.get_high_score_text_entity().rect;
+			SDL_RenderCopy(renderer, menu.get_high_score_text_entity().texture, nullptr, &r);
+
 			r = menu.get_start_msg_text_entity().rect;
 			SDL_RenderCopy(renderer, menu.get_start_msg_text_entity().texture, nullptr, &r);
 
@@ -150,7 +153,7 @@ int main(int argc, char* argv[]) {
 		}
 
 		game_score->render_game_score(renderer);
-		//game_score->render_game_score(renderer);
+		game_score->render_high_score(renderer);
 
 		//game.render();
 		SDL_RenderPresent(renderer);
