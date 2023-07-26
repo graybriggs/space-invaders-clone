@@ -12,11 +12,12 @@ Menu::Menu(SDL_Renderer* rend, GameStates state):
 {
 
 	TTF_Font* sans = TTF_OpenFont("sans.ttf", 14);
+	TTF_Font* roboto_black = TTF_OpenFont("Roboto-Black.ttf", 14);
 	SDL_Color white = { 255,255,255 };
+	SDL_Color red = { 255, 0, 0 };
 
 
-
-	SDL_Surface* surface_si = TTF_RenderText_Solid(sans, "SPACE INVADERS: ", white);
+	SDL_Surface* surface_si = TTF_RenderText_Solid(roboto_black, "SPACE INVADERS: ", white);
 	title.texture = SDL_CreateTextureFromSurface(renderer, surface_si);
 	SDL_FreeSurface(surface_si);
 	SDL_Rect si_rect;
@@ -27,7 +28,7 @@ Menu::Menu(SDL_Renderer* rend, GameStates state):
 	title.rect = si_rect;
 
 
-	SDL_Surface* surface_score = TTF_RenderText_Solid(sans, "HI-SCORE: ", white);
+	SDL_Surface* surface_score = TTF_RenderText_Solid(sans, "HI-SCORE: ", red);
 	score.texture = SDL_CreateTextureFromSurface(renderer, surface_score);
 	SDL_FreeSurface(surface_score);
 	SDL_Rect score_rect;
@@ -54,7 +55,7 @@ Menu::Menu(SDL_Renderer* rend, GameStates state):
 	version.texture = SDL_CreateTextureFromSurface(renderer, surface_version);
 	SDL_FreeSurface(surface_version);
 	SDL_Rect ver_rect;
-	ver_rect.x = 0;
+	ver_rect.x = global::SCREEN_W - 64;
 	ver_rect.y = 8;
 	ver_rect.w = 64;
 	ver_rect.h = 18;
