@@ -43,6 +43,7 @@ int main(int argc, char* argv[]) {
 	Player player(player_sprite.get(), util::Rect(global::SCREEN_W / 2, global::SCREEN_H - 100, 32, 16));
 
 	auto game_score = std::make_unique<GameScore>();
+	game_score->init_digits(renderer);
 
 	auto enemy_sprite = load_sprite(renderer, "./images/aliens.bmp");
 	EnemyController enemy_controller(enemy_sprite.get(), game_score.get());
@@ -145,8 +146,11 @@ int main(int argc, char* argv[]) {
 			SDL_RenderCopy(renderer, menu.get_start_msg_text_entity().texture, nullptr, &r);
 
 			r = menu.get_version_text_entity().rect;
-			SDL_RenderCopy(renderer, menu.get_version_text_entity().texture, nullptr, &r);
+			//SDL_RenderCopy(renderer, menu.get_version_text_entity().texture, nullptr, &r);
 		}
+
+		game_score->render_game_score(renderer);
+		//game_score->render_game_score(renderer);
 
 		//game.render();
 		SDL_RenderPresent(renderer);
