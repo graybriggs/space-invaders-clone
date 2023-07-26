@@ -6,9 +6,10 @@
 
 #include <string>
 
-Menu::Menu(SDL_Renderer* rend)
+Menu::Menu(SDL_Renderer* rend, GameStates state):
+	renderer(rend),
+	cur_state(state)
 {
-	renderer = rend;
 
 	TTF_Font* sans = TTF_OpenFont("sans.ttf", 14);
 	SDL_Color white = { 255,255,255 };
@@ -22,7 +23,7 @@ Menu::Menu(SDL_Renderer* rend)
 	si_rect.x = 196;
 	si_rect.y = 128;
 	si_rect.w = 618;
-	si_rect.h = 320;
+	si_rect.h = 300;
 	title.rect = si_rect;
 
 
@@ -41,11 +42,10 @@ Menu::Menu(SDL_Renderer* rend)
 	start_msg.texture = SDL_CreateTextureFromSurface(renderer, surface_start);
 	SDL_FreeSurface(surface_start);
 	SDL_Rect start_rect;
-	start_rect.x = 196;
-	start_rect.y = 256;
+	start_rect.x = 320;
+	start_rect.y = 128 + 320;
 	start_rect.w = 320;
 	start_rect.h = 32;
-	score.rect = score_rect;
 	start_msg.rect = start_rect;
 
 
@@ -54,23 +54,33 @@ Menu::Menu(SDL_Renderer* rend)
 	version.texture = SDL_CreateTextureFromSurface(renderer, surface_version);
 	SDL_FreeSurface(surface_version);
 	SDL_Rect ver_rect;
-	ver_rect.x = global::SCREEN_W - 64;
-	ver_rect.y = 32;
-	ver_rect.w = 48;
-	ver_rect.h = 32;
+	ver_rect.x = 0;
+	ver_rect.y = 8;
+	ver_rect.w = 64;
+	ver_rect.h = 18;
 	version.rect = ver_rect;
 
 }
 
+Menu::~Menu() {
+	SDL_DestroyTexture(title.texture);
+	SDL_DestroyTexture(score.texture);
+	SDL_DestroyTexture(start_msg.texture);
+	SDL_DestroyTexture(version.texture);
+}
+
 GameStates Menu::input(SDL_Event e) {
 
+	if (cur_state == GameStates::MENU) {
 
-	if (e.type == SDL_KEYDOWN) {
-		if (e.key.keysym.sym == SDLK_KP_ENTER) {
-			return GameStates::GAME;
+		if (e.type == SDL_KEYDOWN) {
+			SDL_Keycode key = e.key.keysym.sym;
+			if (e.key.keysym.sym == SDLK_RETURN || e.key.keysym.sym == SDLK_SPACE) {
+				cur_state = GameStates::GAME;
+			}
 		}
 	}
-	return GameStates::MENU;
+	return cur_state;
 }
 
 void Menu::main_menu() {
@@ -87,9 +97,9 @@ TextEntity Menu::get_title_text_entity() {
 }
 
 TextEntity Menu::get_start_msg_text_entity() {
-	return score;
+	return start_msg;
 }
 
 TextEntity Menu::get_version_text_entity() {
-	return title;
+	return version;
 }

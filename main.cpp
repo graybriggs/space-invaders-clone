@@ -1,6 +1,7 @@
 
 
 #include <SDL.h>
+#include <SDL_ttf.h>
 
 #include <memory>
 
@@ -8,10 +9,12 @@
 #include "game.h"
 #include "game_score.h"
 #include "globals.h"
+#include "menu.h"
 #include "particle_manager.h"
 #include "renderer.h"
 #include "sprite.h"
 #include "star_field.h"
+#include "state.h"
 #include "timer.h"
 
 #include "bonus_enemy.h"
@@ -19,7 +22,7 @@
 int main(int argc, char* argv[]) {
 	srand(time(nullptr));
 	SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER);
-
+	TTF_Init();
 	SDL_Window* window = window = SDL_CreateWindow(
 		"Space Invaders",
 		SDL_WINDOWPOS_UNDEFINED,
@@ -58,9 +61,11 @@ int main(int argc, char* argv[]) {
 	Starfield starfield;
 	setup_starfield(starfield);
 
-	ParticleManager particle_manager;
+	//ParticleManager particle_manager;
 
-
+	GameStates game_state = GameStates::MENU;
+	Menu menu(renderer, game_state);
+	
 	const float fps = 60.0f;
 	const float dt = 1.0f / fps; // fixed timestep of 1/60th of a second
 	float accumulator = 0.0f;
@@ -77,8 +82,13 @@ int main(int argc, char* argv[]) {
 			if (event.type == SDL_QUIT) {
 				done = true;
 			}
-			//game.input(event);
-			player.input(event);
+
+			game_state = menu.input(event);
+
+			if (game_state == GameStates::GAME) {
+				//game.input(event);
+				player.input(event);
+			}
 		}
 
 		if (accumulator > 0.2f)
@@ -93,13 +103,17 @@ int main(int argc, char* argv[]) {
 				bullet.fire(player.getBoundingBox());
 				player.fireWait();
 			}
+			
+
 			bullet.logic(dt);
 			enemy_controller.logic(dt);
 			enemy_controller.bombDropController(currentTime);
 			enemy_controller.enemyBulletCollision(bullet);
 			bonus_enemy_controller.logic(dt);
 			
-			particle_manager.logic(dt);
+			
+
+			//particle_manager.logic(dt);
 
 			accumulator -= dt;
 		}
@@ -116,7 +130,23 @@ int main(int argc, char* argv[]) {
 		if (bullet.isActive())
 			render_entity(renderer, bullet);
 
-		render_particles(renderer, particle_manager.getParticles());
+		//render_particles(renderer, particle_manager.getParticles());
+
+
+		if (game_state == GameStates::MENU) {
+
+			SDL_Rect r = menu.get_title_text_entity().rect;
+			SDL_RenderCopy(renderer, menu.get_title_text_entity().texture, nullptr, &r);
+
+			r = menu.get_score_text_entity().rect;
+			SDL_RenderCopy(renderer, menu.get_score_text_entity().texture, nullptr, &r);
+
+			r = menu.get_start_msg_text_entity().rect;
+			SDL_RenderCopy(renderer, menu.get_start_msg_text_entity().texture, nullptr, &r);
+
+			r = menu.get_version_text_entity().rect;
+			SDL_RenderCopy(renderer, menu.get_version_text_entity().texture, nullptr, &r);
+		}
 
 		//game.render();
 		SDL_RenderPresent(renderer);

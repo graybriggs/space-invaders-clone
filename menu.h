@@ -11,7 +11,8 @@ enum class GameStates;
 class Menu {
 public:
 
-	Menu(SDL_Renderer* rend);
+	Menu(SDL_Renderer* rend, GameStates state);
+	~Menu();
 
 	GameStates input(SDL_Event e);
 
@@ -29,5 +30,6 @@ private:
 	TextEntity start_msg;
 	TextEntity version;
 
+	GameStates cur_state;
 };
 
