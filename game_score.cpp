@@ -2,6 +2,7 @@
 #include <SDL.h>
 #include <SDL_ttf.h>
 
+#include <algorithm>
 #include <string>
 #include <vector>
 
@@ -12,7 +13,7 @@
 //constexpr int GameScore::LevelClear = 100;
 
 GameScore::GameScore() :
-	current_score(123456),
+	current_score(0),
 	high_score(666),
 	level_number(1),
 	level_clear_multiplier(1.0)
@@ -44,7 +45,7 @@ void GameScore::level_clear() {
 
 void GameScore::init_digits(SDL_Renderer* renderer) {
 
-	TTF_Font* sans = TTF_OpenFont("sans.ttf", 14);
+	TTF_Font* sans = TTF_OpenFont("Roboto-Black.ttf", 14);
 	SDL_Color white = { 255,255,255 };
 
 	int x_pos = 0;
@@ -67,15 +68,23 @@ void GameScore::init_digits(SDL_Renderer* renderer) {
 
 void GameScore::update_score(int score) {
 	current_score = score;
+
+	if (current_score > INT_MAX) {
+		// wraparound ?
+		// you broke the score
+		// do something special
+	}
 }
 
 void GameScore::parse_score() {
 	score_digits.clear();
 
-	while (current_score > 0) {
-		int d = current_score % 10;
+	int cur_scr = current_score;
+
+	while (cur_scr > 0) {
+		int d = cur_scr % 10;
 		score_digits.push_back(d);
-		current_score = current_score / 10;
+		cur_scr = cur_scr / 10;
 	}
 
 	std::reverse(std::begin(score_digits), std::end(score_digits));
